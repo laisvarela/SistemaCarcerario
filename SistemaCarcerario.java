@@ -57,4 +57,13 @@ public class SistemaCarcerario {
             }
         }
     }
+
+    //Método para remover guarda
+    public void removerGuarda(Cela cela, Turno turno) {
+        if (turno == Turno.DIURNO) {
+            cela.setGuardaDiurno(null);
+        } else if (turno == Turno.NOTURNO) {
+            cela.setGuardaNoturno(null);
+        }
+    }
 }
