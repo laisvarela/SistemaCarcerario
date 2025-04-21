@@ -1,7 +1,5 @@
 public class CelaLotadaException extends Exception {
-
-    public CelaLotadaException(String message) {
-        super(message);
-    }
-    
+    public CelaLotadaException(String msg) {
+        super(msg);
+    } 
 }

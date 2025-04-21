@@ -29,8 +29,12 @@ public class Main {
             //teste turno inválido
             //Guarda g3 = new Guarda("Pedro", "123456789", LocalDate.of(1992, 2, 2), "G003", Turno.DIURNO);
             //sistema.adicionarGuarda(g3, c1);
+
+            //teste de guarda não encontrado
+            //sistema.removerGuarda(c1, g1.getTurno());
+            sistema.removerGuarda(c1, g1.getTurno());          
             
-        } catch (RegistroDuplicadoException | TurnoInvalidoException | CelaLotadaException e) {
+        } catch (RegistroDuplicadoException | TurnoInvalidoException | CelaLotadaException | GuardaNaoEncontradoException e) {
             System.out.println("Erro: " + e.getMessage());
         }
     }

@@ -1,5 +1,5 @@
 public class RegistroDuplicadoException extends Exception {
-    public RegistroDuplicadoException(String message) {
-        super(message);
+    public RegistroDuplicadoException(String msg) {
+        super(msg);
     }
 }
