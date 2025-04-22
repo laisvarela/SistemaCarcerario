@@ -29,7 +29,7 @@ Este projeto consiste em um sistema carcerário simples, implementado em Java, c
   A classe `SistemaCarcerario` centraliza a lógica de controle, validação de dados e lançamentos de exceções, garantindo a integridade do sistema.
 
 ## 📎 Diagrama UML
-O diagrama UML do projeto foi desenvolvido utilizando a extensão **Draw.io** no VSCode. Ele ilustra as relações entre as classes, heranças, métodos e atributos principais.
+O diagrama UML do projeto foi desenvolvido utilizando a extensão **Draw.io** no VSCode. Ele ilustra as relações entre as classes, heranças, métodos e atributos principais. Encontra-se disponível no arquivo `Avaliação 1 - Relatório.pdf`
 
 ## 🚀 Funcionalidades Principais
 
