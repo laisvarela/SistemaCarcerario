@@ -38,3 +38,18 @@ O diagrama UML do projeto foi desenvolvido utilizando a extensão **Draw.io** no
 - Geração de relatórios individuais e compostos pelas classes via interface `Registro`.
 - Exceções personalizadas para garantir a integridade dos dados.
 
+## Como Executar
+
+### Opção 1: Visual Studio Code
+  1. Abra o projeto no **VSCOde**.
+  2. Instale a extensão `Extension Pack for Java`.
+  3. Localize o arquivo `Main.java`.
+  4. Clique em Run na barra superior ou clique com o botão direito do mouse em cima do arquivo e selecione a opção **Run Java**.
+  5. A saída do programa será apresentada no terminal integrado.
+
+### Opção 2: NetBeans IDE
+  1. Abra o **NetBeans**.
+  2. Vá em **Open project**.
+  3. Selecione a pasta no local em que você salvou.
+  4. Clique no ícone `run` na barra superior ou clique com o botão direito do mouse no aquivo `Main.java` e selecione a opção **Run FIle**
+  5. A saída do programa será apresentada no output. 
