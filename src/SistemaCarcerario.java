@@ -60,12 +60,14 @@ public class SistemaCarcerario {
     }
 
     //Método para remover guarda
-    public void removerGuarda(Cela cela, Turno turno) throws GuardaNaoEncontradoException{
-        if (turno == Turno.DIURNO && cela.getGuardaDiurno() == null) {
+    public void removerGuarda(Cela cela, Turno turno) throws GuardaNaoEncontradoException {
+        if(cela.getGuardaDiurno() == null && cela.getGuardaNoturno() == null){
+            throw new GuardaNaoEncontradoException("Segurança da cela não pode estar vazia!");
+        } else if (turno == Turno.DIURNO && cela.getGuardaDiurno() == null) {
             throw new GuardaNaoEncontradoException("Não há guarda diurno cadastrado para ser removido na cela " + cela.getNumero());
         } else if (turno == Turno.NOTURNO && cela.getGuardaNoturno() == null) {
             throw new GuardaNaoEncontradoException("Não há guarda noturno cadastrado para ser removido na cela " + cela.getNumero());
-        }
+        } 
             cela.setGuardaDiurno(null);
             cela.setGuardaNoturno(null);     
         

@@ -28,15 +28,16 @@ public class Main {
             //sistema.adicionarPrisioneiro(p3, c1);
 
             //teste turno inválido
-            //Guarda g3 = new Guarda("Pedro", "123456789", LocalDate.of(1992, 2, 2), "G003", Turno.DIURNO);
+            //Guarda g3 = new Guarda("Pedro", "12347S6789", LocalDate.of(1992, 2, 2), "G003", Turno.DIURNO);
             //sistema.adicionarGuarda(g3, c1);
 
             //teste de guarda não encontrado
             //sistema.removerGuarda(c1, g1.getTurno());
-            sistema.removerGuarda(c1, g1.getTurno()); 
+            sistema.removerGuarda(c1, g1.getTurno());
+            sistema.removerGuarda(c1, g2.getTurno());
             
             //NullPointerException
-            System.out.println("Relatório da cela:" + c1.gerarRelatorio());
+            //System.out.println("Relatório da cela:" + c1.gerarRelatorio());
             
         } catch (RegistroDuplicadoException | TurnoInvalidoException | CelaLotadaException | GuardaNaoEncontradoException e) {
             System.out.println("Erro: " + e.getMessage());
