@@ -17,10 +17,10 @@ public class SistemaCarcerario {
             throw new RegistroDuplicadoException("CPF já cadastrado: " + guarda.getCpf());
         }
         // Verifica se a cela já possui um guarda diurno ou noturno
-        if (cela.getGuardaDiurno() == null){
+        if (cela.getGuardaDiurno() == null && guarda.getTurno() == Turno.DIURNO) {
             cela.setGuardaDiurno(guarda);
 
-        } else if (cela.getGuardaNoturno() == null) {
+        } else if (cela.getGuardaNoturno() == null && guarda.getTurno() == Turno.NOTURNO) {
             cela.setGuardaNoturno(guarda);
 
         } else if (cela.getGuardaDiurno() != null && cela.getGuardaDiurno().getTurno() == guarda.getTurno() 

@@ -33,10 +33,16 @@ public class Main {
 
             //teste de guarda não encontrado
             //sistema.removerGuarda(c1, g1.getTurno());
-            sistema.removerGuarda(c1, g1.getTurno());          
+            sistema.removerGuarda(c1, g1.getTurno()); 
+            
+            //NullPointerException
+            System.out.println("Relatório da cela:" + c1.gerarRelatorio());
             
         } catch (RegistroDuplicadoException | TurnoInvalidoException | CelaLotadaException | GuardaNaoEncontradoException e) {
             System.out.println("Erro: " + e.getMessage());
+        }
+        catch (NullPointerException e) {
+            System.out.println("Erro, relatório vazio: " + e.getMessage());
         }
     }
 }
