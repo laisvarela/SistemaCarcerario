@@ -1,16 +1,29 @@
-package src;
+package classes;
+
 import java.time.LocalDate;
 
-public class Guarda extends Pessoa implements Registro{
+public class Guarda extends Pessoa implements Registro {
+
     private String matricula;
     private Turno turno;
+    private LocalDate dataAdmissao;
 
-    public Guarda(String nome, String cpf, LocalDate dataNascimento, String matricula, Turno turno) {
+    public Guarda(String matricula, Turno turno, LocalDate dataAdmissao, String nome, String cpf, LocalDate dataNascimento) {
         super(nome, cpf, dataNascimento);
         this.matricula = matricula;
         this.turno = turno;
+        this.dataAdmissao = dataAdmissao;
     }
+
     // getters e setters
+    public LocalDate getDataAdmissao() {
+        return dataAdmissao;
+    }
+
+    public void setDataAdmissao(LocalDate dataAdmissao) {
+        this.dataAdmissao = dataAdmissao;
+    }
+
     public String getMatricula() {
         return matricula;
     }
@@ -30,8 +43,8 @@ public class Guarda extends Pessoa implements Registro{
     // implementação do método da interface Registro
     @Override
     public String gerarRelatorio() {
-        return "Guarda: " + getNome() + "\n" +
-               "Matrícula: " + matricula + "\n" +
-               "Turno: " + turno;
+        return "Guarda: " + getNome() + "\n"
+                + "Matrícula: " + matricula + "\n"
+                + "Turno: " + turno;
     }
 }

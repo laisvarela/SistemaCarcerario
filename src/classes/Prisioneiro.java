@@ -1,13 +1,12 @@
-package src;
+package classes;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 public class Prisioneiro extends Pessoa implements Registro {
     private String numRegistro;
-    private LocalDateTime dataPrisao;
+    private LocalDate dataPrisao;
     private int pena;
 
-    public Prisioneiro(String nome, String cpf, LocalDate dataNascimento, String numRegistro, LocalDateTime dataPrisao, int pena) {
+    public Prisioneiro(String nome, String cpf, LocalDate dataNascimento, String numRegistro, LocalDate dataPrisao, int pena) {
         super(nome, cpf, dataNascimento);
         this.numRegistro = numRegistro;
         this.dataPrisao = dataPrisao;
@@ -22,11 +21,11 @@ public class Prisioneiro extends Pessoa implements Registro {
         this.numRegistro = numRegistro;
     }
 
-    public LocalDateTime getDataPrisao() {
+    public LocalDate getDataPrisao() {
         return dataPrisao;
     }
 
-    public void setDataPrisao(LocalDateTime dataPrisao) {
+    public void setDataPrisao(LocalDate dataPrisao) {
         this.dataPrisao = dataPrisao;
     }
 
@@ -48,7 +47,7 @@ public class Prisioneiro extends Pessoa implements Registro {
     
     // método para calcular o tempo restante de pena
     public int getTempoRestante() {
-        LocalDateTime dataAtual = LocalDateTime.now();
+        LocalDate dataAtual = LocalDate.now();
         int anosRestantes = pena - (int) (dataAtual.getYear() - dataPrisao.getYear());
         return anosRestantes > 0 ? anosRestantes : 0;
     }
