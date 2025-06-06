@@ -1,5 +1,10 @@
 package views;
 
+import classes.Cela;
+import classes.Guarda;
+import classes.Prisioneiro;
+import java.util.ArrayList;
+
 public class SistemaCarcerarioJanela extends javax.swing.JFrame {
 
     private CadastrarGuardaInternalFrame telaCadastroGuarda;

@@ -16,10 +16,7 @@ import javax.swing.table.DefaultTableModel;
 public class CadastrarCelaInternalFrame extends javax.swing.JInternalFrame {
 
     private ArrayList<Cela> listaCela = new ArrayList<>();
-    private ArrayList<Guarda> listaGuardaDiurno = new ArrayList<>();
-    private ArrayList<Guarda> listaGuardaDiurnoAtribuido = new ArrayList<>();
-    private ArrayList<Guarda> listaGuardaNoturno = new ArrayList<>();
-    private ArrayList<Guarda> listaGuardaNoturnoAtribuido = new ArrayList<>();
+    private ArrayList<Guarda> listaGuardas = new ArrayList<>();
     private Set<Prisioneiro> listaPrisioneiros = new HashSet<>();
     DefaultListModel<String> modelDiurno = new DefaultListModel<>();
     DefaultListModel<String> modelNoturno = new DefaultListModel<>();
@@ -267,20 +264,13 @@ public class CadastrarCelaInternalFrame extends javax.swing.JInternalFrame {
 
     // método para atualizar as listas de guarda diurno e guarda noturno
     public void atualizarListasGuardas(ArrayList<Guarda> lista) {
-        // Limpa os modelos antes de atualizar
-        modelDiurno.clear();
-        modelNoturno.clear();
-        listaGuardaDiurno.clear();
-        listaGuardaNoturno.clear();
-
+        
         // pega a lista de guardas que é passada como parametro
         if (guardas != null && !lista.isEmpty()) {
             for (Guarda guarda : lista) {
                 if (guarda.getTurno().equals(Turno.DIURNO)) {
-                    listaGuardaDiurno.add(guarda);
                     modelDiurno.addElement(guarda.getMatricula());
                 } else {
-                    listaGuardaNoturno.add(guarda);
                     modelNoturno.addElement(guarda.getMatricula());
                 }
             }
@@ -299,26 +289,15 @@ public class CadastrarCelaInternalFrame extends javax.swing.JInternalFrame {
         //lista de guarda diurno/noturno não for vazia, retorna true, ou seja, permite a remoção defiinitva do guarda ou a edição de turno
 
         if (funcao.equalsIgnoreCase("editar")) {
-            for (Guarda guarda : listaGuardaDiurnoAtribuido) {
-                if (matricula.equals(guarda.getMatricula())) {
-                    JOptionPane.showMessageDialog(null, new TurnoInvalidoException().getMsg());
-                    return false;
-                }
-            }
-            for (Guarda guarda : listaGuardaNoturnoAtribuido) {
+            for (Guarda guarda : listaGuardas) {
                 if (matricula.equals(guarda.getMatricula())) {
                     JOptionPane.showMessageDialog(null, new TurnoInvalidoException().getMsg());
                     return false;
                 }
             }
         } else if (funcao.equalsIgnoreCase("remover")) {
-            for (Guarda guarda : listaGuardaDiurnoAtribuido) {
-                if (matricula.equals(guarda.getMatricula()) && !modelDiurno.isEmpty()) {
-                    return false;
-                }
-            }
-            for (Guarda guarda : listaGuardaNoturnoAtribuido) {
-                if (matricula.equals(guarda.getMatricula()) && !modelNoturno.isEmpty()) {
+            for (Guarda guarda : listaGuardas) {
+                if (matricula.equals(guarda.getMatricula()) && !modelNoturno.isEmpty() || !modelDiurno.isEmpty()) {
                     return false;
                 }
             }
@@ -355,15 +334,13 @@ public class CadastrarCelaInternalFrame extends javax.swing.JInternalFrame {
                 for (Guarda guarda : guardas.getListaGuardas()) {
                     if (guarda.getMatricula().equals(celaGuardaDiurno_List.getSelectedValue())) {
                         guardaDiurno = guarda;
-                        listaGuardaDiurnoAtribuido.add(guarda);
-                        listaGuardaDiurno.remove(guarda);
-                        atualizarListasGuardas(listaGuardaDiurno);
+                        listaGuardas.add(guarda);
+                        guardas.getListaGuardas().remove(guarda);
                     }
                     if (guarda.getMatricula().equals(celaGuardaNoturno_List.getSelectedValue())) {
                         guardaNoturno = guarda;
-                        listaGuardaNoturnoAtribuido.add(guarda);
-                        listaGuardaNoturno.remove(guarda);
-                        atualizarListasGuardas(listaGuardaNoturno);
+                        listaGuardas.add(guarda);
+                        guardas.getListaGuardas().remove(guarda);
                     }
                 }
 
