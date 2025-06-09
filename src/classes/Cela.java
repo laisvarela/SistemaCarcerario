@@ -1,6 +1,6 @@
 package classes;
 import java.util.Set;
-public class Cela implements Registro{
+public class Cela implements Registro, Entidade{
     private int numero, capacidade;
     private Guarda guardaDiurno, guardaNoturno;
     private Set<Prisioneiro> prisioneiros;
@@ -15,6 +15,10 @@ public class Cela implements Registro{
         this.lotada = lotada;
     }
 
+    public Cela() {
+    }
+
+    
     public boolean isLotada() {
         return lotada;
     }
@@ -76,6 +80,11 @@ public class Cela implements Registro{
             relatorio += prisioneiro.gerarRelatorio()+"Tempo Restante: "+prisioneiro.getTempoRestante()+"\n";
         }
         return relatorio;
+    }
+
+    @Override
+    public String getId() {
+        return String.valueOf(this.getNumero());
     }
 
 }

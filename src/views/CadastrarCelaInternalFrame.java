@@ -33,7 +33,6 @@ public class CadastrarCelaInternalFrame extends javax.swing.JInternalFrame {
         prisioneiros = prisioneiroFrame;
         modelTabela = (DefaultTableModel) celaTabela_Table.getModel();
         atualizarConjuntoPrisioneiros();
-        atualizarListasGuardas(guardas.getListaGuardas());
     }
 
     public CadastrarCelaInternalFrame() {
@@ -315,7 +314,6 @@ public class CadastrarCelaInternalFrame extends javax.swing.JInternalFrame {
     }
     private void celaAdicionar_BtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_celaAdicionar_BtnActionPerformed
         //atualiza 
-        atualizarListasGuardas(guardas.getListaGuardas());
         atualizarConjuntoPrisioneiros();
         celaListaPanel.setVisible(false);
         celaCadastroPanel.setVisible(true);
@@ -331,18 +329,7 @@ public class CadastrarCelaInternalFrame extends javax.swing.JInternalFrame {
         }
         if (!celaNumero_FomattedField.getText().isBlank()) {
             if (!celaGuardaDiurno_List.isSelectionEmpty() && !celaGuardaNoturno_List.isSelectionEmpty()) {
-                for (Guarda guarda : guardas.getListaGuardas()) {
-                    if (guarda.getMatricula().equals(celaGuardaDiurno_List.getSelectedValue())) {
-                        guardaDiurno = guarda;
-                        listaGuardas.add(guarda);
-                        guardas.getListaGuardas().remove(guarda);
-                    }
-                    if (guarda.getMatricula().equals(celaGuardaNoturno_List.getSelectedValue())) {
-                        guardaNoturno = guarda;
-                        listaGuardas.add(guarda);
-                        guardas.getListaGuardas().remove(guarda);
-                    }
-                }
+                
 
                 // adiciona novo objeto Cela
                 cela = new Cela(Integer.parseInt(celaNumero_FomattedField.getText()), Integer.parseInt(celaCapaciade_ComboBox.getSelectedItem().toString()),
@@ -355,13 +342,6 @@ public class CadastrarCelaInternalFrame extends javax.swing.JInternalFrame {
                     lotadoString = "Sim";
                 } else {
                     lotadoString = "Não";
-                }
-                try {
-                    //adiciona na tabel
-                    modelTabela.addRow(new Object[]{celaNumero_FomattedField.getText(), celaCapaciade_ComboBox.getSelectedItem().toString(),
-                        lotadoString, guardaDiurno.getMatricula(), guardaNoturno.getMatricula()});
-                } catch (NullPointerException e) {
-                    System.out.println("Erro na tabela");
                 }
 
                 // configuração visual

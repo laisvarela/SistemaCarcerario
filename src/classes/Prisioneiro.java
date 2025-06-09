@@ -1,7 +1,7 @@
 package classes;
 import java.time.LocalDate;
 
-public class Prisioneiro extends Pessoa implements Registro {
+public class Prisioneiro extends Pessoa implements Registro, Entidade{
     private String numRegistro;
     private LocalDate dataPrisao;
     private int pena;
@@ -12,6 +12,11 @@ public class Prisioneiro extends Pessoa implements Registro {
         this.dataPrisao = dataPrisao;
         this.pena = pena;
     }
+
+    public Prisioneiro(String nome, String cpf, LocalDate dataNascimento) {
+        super(nome, cpf, dataNascimento);
+    }
+    
     // getters e setters
     public String getNumRegistro() {
         return numRegistro;
@@ -50,5 +55,10 @@ public class Prisioneiro extends Pessoa implements Registro {
         LocalDate dataAtual = LocalDate.now();
         int anosRestantes = pena - (int) (dataAtual.getYear() - dataPrisao.getYear());
         return anosRestantes > 0 ? anosRestantes : 0;
+    }
+
+    @Override
+    public String getId() {
+        return this.getNumRegistro();
     }
 }

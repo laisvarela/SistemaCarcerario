@@ -2,7 +2,7 @@ package classes;
 
 import java.time.LocalDate;
 
-public class Guarda extends Pessoa implements Registro {
+public class Guarda extends Pessoa implements Registro, Entidade{
 
     private String matricula;
     private Turno turno;
@@ -13,6 +13,10 @@ public class Guarda extends Pessoa implements Registro {
         this.matricula = matricula;
         this.turno = turno;
         this.dataAdmissao = dataAdmissao;
+    }
+
+    public Guarda(String nome, String cpf, LocalDate dataNascimento) {
+        super(nome, cpf, dataNascimento);
     }
 
     // getters e setters
@@ -46,5 +50,10 @@ public class Guarda extends Pessoa implements Registro {
         return "Guarda: " + getNome() + "\n"
                 + "Matrícula: " + matricula + "\n"
                 + "Turno: " + turno;
+    }
+
+    @Override
+    public String getId() {
+        return this.getMatricula();
     }
 }

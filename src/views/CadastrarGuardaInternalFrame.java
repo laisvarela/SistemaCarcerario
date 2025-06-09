@@ -1,33 +1,33 @@
 package views;
 
+import classes.AtualizavelListener;
 import classes.Guarda;
 import classes.Turno;
 import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
-public class CadastrarGuardaInternalFrame extends javax.swing.JInternalFrame {
+public class CadastrarGuardaInternalFrame extends javax.swing.JInternalFrame implements AtualizavelListener {
 
     private Guarda guarda;
-    private ArrayList<Guarda> listaGuardas = new ArrayList<>();
-    private DefaultTableModel table;
+    public DefaultTableModel tableModel;
     private DateTimeFormatter formatter;
     private LocalDate dataNasci, dataAdmissao;
     private int linha;
     private String matricula;
-    private CadastrarCelaInternalFrame cela = new CadastrarCelaInternalFrame();
+    private final SistemaCarcerarioJanela main;
 
-    public CadastrarGuardaInternalFrame() {
+    public CadastrarGuardaInternalFrame(SistemaCarcerarioJanela main) {
         initComponents();
+        this.main = main;
+        main.addListener(this);
         cadastrarGuardaPanel.setVisible(false);
-        table = (DefaultTableModel) guardaLista_Table.getModel();
+        tableModel = (DefaultTableModel) guardaLista_Table.getModel();
         guardaEditar_Btn.setVisible(false);
         guardaRemover_Btn.setVisible(false);
         editarSalvar_Btn.setVisible(false);
-        atualizaTabela();
     }
 
     @SuppressWarnings("unchecked")
@@ -68,8 +68,7 @@ public class CadastrarGuardaInternalFrame extends javax.swing.JInternalFrame {
         setIconifiable(true);
         setMaximizable(true);
         setTitle("Cadastro de Guarda");
-
-        cadastrarGuardaPanel.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        getContentPane().setLayout(new java.awt.BorderLayout());
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel1.setText("Dados Pessoais");
@@ -121,7 +120,7 @@ public class CadastrarGuardaInternalFrame extends javax.swing.JInternalFrame {
 
         jLabel9.setText("Turno:");
 
-        guarda_ComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Diurno", "Noturno", " " }));
+        guarda_ComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Diurno", "Noturno" }));
 
         editarSalvar_Btn.setText("Salvar");
         editarSalvar_Btn.addActionListener(new java.awt.event.ActionListener() {
@@ -309,23 +308,21 @@ public class CadastrarGuardaInternalFrame extends javax.swing.JInternalFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    public ArrayList<Guarda> getListaGuardas() {
-        return listaGuardas;
-    }
-
-    public void setListaGuardas(ArrayList<Guarda> listaGuardas) {
-        this.listaGuardas = listaGuardas;
-    }
-
-    private void atualizaTabela() {
-        for (Guarda listaGuarda : listaGuardas) {
-            table.setValueAt(listaGuarda.getNome(), linha, 0);
-            table.setValueAt(listaGuarda.getMatricula(), linha, 1);
-            table.setValueAt(listaGuarda.getTurno(), linha, 2);
+    @Override
+    public void dadosAtualizados(String tipo) {
+        if (tipo.equals("Guarda")) {
+            atualizarTabela();
         }
     }
 
+    private void atualizarTabela() {
+        tableModel.setRowCount(0); // Limpa a tabela
+        for (Object obj : main.getListaGeral()) {
+            if (obj instanceof Guarda guarda) {
+                tableModel.addRow(new Object[]{guarda.getNome(), guarda.getMatricula(), guarda.getTurno()});
+            }
+        }
+    }
     private void guardaAdicionar_BtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_guardaAdicionar_BtnActionPerformed
         cadastrarConfig();
     }//GEN-LAST:event_guardaAdicionar_BtnActionPerformed
@@ -335,12 +332,12 @@ public class CadastrarGuardaInternalFrame extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_guardaLimpar_ButtonActionPerformed
 
     private void guardaSalvar_ButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_guardaSalvar_ButtonActionPerformed
-
         if (verificarCampos()) { // adiciona guarda se todos os campos forem válidos
             try {
                 formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy"); // padrão de formatação para data
                 dataNasci = LocalDate.parse(guardaDataNasci_FormattedTextField.getText(), formatter);
                 dataAdmissao = LocalDate.parse(guardaDataAdmissao_FormattedTextField.getText(), formatter);
+                matricula = guardaMatricula_TextField.getText();
                 String turno;
                 if (guarda_ComboBox.getSelectedItem().equals("Diurno")) {
                     turno = "DIURNO";
@@ -349,18 +346,16 @@ public class CadastrarGuardaInternalFrame extends javax.swing.JInternalFrame {
                 }
                 if (checarCPF_MatriculaDuplicado(guardaCPF_FormattedTextField.getText(), guardaMatricula_TextField.getText())) {
                     // cria um objeto Guarda passando como parametro os valores informados na tela
-                    guarda = new Guarda(guardaMatricula_TextField.getText(), Turno.valueOf(turno), dataAdmissao,
+                    guarda = new Guarda(matricula, Turno.valueOf(turno), dataAdmissao,
                             guardaNome_TextField.getText(), guardaCPF_FormattedTextField.getText(),
                             dataNasci);
 
-                    // adiciona na lista
-                    listaGuardas.add(guarda);
+                    main.atualizarListaGeral(guarda, 0, matricula);
 
                     // adiciona na tabela
-                    table.addRow(new Object[]{guardaNome_TextField.getText(), guardaMatricula_TextField.getText(), turno});
+                    tableModel.addRow(new Object[]{guardaNome_TextField.getText(), matricula, turno});
 
-                    cela.atualizarListasGuardas(listaGuardas);
-                    
+                    //cela.atualizarListasGuardas(listaGuardas);
                     JOptionPane.showMessageDialog(null, "Guarda cadastrado com sucesso!");
 
                     // método para limpar os campos
@@ -384,17 +379,21 @@ public class CadastrarGuardaInternalFrame extends javax.swing.JInternalFrame {
     private void guardaEditar_BtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_guardaEditar_BtnActionPerformed
         linha = guardaLista_Table.getSelectedRow();
         if (linha >= 0) { // uma linha deve estar selecionada para habilitar a tela de editar
-            matricula = (String) table.getValueAt(linha, 1);
-            for (Guarda listaGuarda : listaGuardas) {
-                if (listaGuarda.getMatricula().equals(matricula)) {
+            matricula = (String) tableModel.getValueAt(linha, 1);
+            for (Object listaGuarda : main.getListaGeral()) {
+                if (listaGuarda instanceof Guarda guarda1 && guarda1.getMatricula().equals(matricula)) {
                     // preenche os campos com os dados do guarda selecionado
-                    guardaNome_TextField.setText(listaGuarda.getNome());
-                    dataNasci = listaGuarda.getDataNascimento();
+                    guardaNome_TextField.setText(guarda1.getNome());
+                    dataNasci = guarda1.getDataNascimento();
                     guardaDataNasci_FormattedTextField.setValue(dataNasci.format(formatter));
-                    guardaMatricula_TextField.setText(listaGuarda.getMatricula());
-                    guardaCPF_FormattedTextField.setText(listaGuarda.getCpf());
+                    guardaMatricula_TextField.setText(guarda1.getMatricula());
+                    guardaCPF_FormattedTextField.setText(guarda1.getCpf());
                     guardaDataAdmissao_FormattedTextField.setValue(dataAdmissao.format(formatter));
-                    guarda_ComboBox.setSelectedItem(listaGuarda.getTurno().toString());
+                    if (guarda1.getTurno().equals(Turno.DIURNO)) {
+                        guarda_ComboBox.setSelectedItem("Diurno");
+                    } else {
+                        guarda_ComboBox.setSelectedItem("Noturno");
+                    }
                     break;
                 }
             }
@@ -415,56 +414,47 @@ public class CadastrarGuardaInternalFrame extends javax.swing.JInternalFrame {
         }
         linha = guardaLista_Table.getSelectedRow();
 
-        if (linha >= 0) {
-            for (Guarda listaGuarda : listaGuardas) {
-                if (listaGuarda.getMatricula().equals(matricula)) {
-                    if (!guardaNome_TextField.getText().isBlank()) {
-                        // edita nome e turno no objeto Guarda
-                        listaGuarda.setNome(guardaNome_TextField.getText());
-                        table.setValueAt(listaGuarda.getNome(), linha, 0);
-                        //atualiza lista de guarda em Cela
-                        cela.atualizarListasGuardas(listaGuardas);
+        if (!guardaNome_TextField.getText().isBlank()) {
+            guarda = new Guarda(guardaMatricula_TextField.getText(), turno, dataAdmissao,
+                    guardaNome_TextField.getText(), guardaCPF_FormattedTextField.getText(), dataNasci);
 
-                        //configuração visual
-                        cadastrarGuardaPanel.setVisible(false);
-                        editarGuardaPanel.setVisible(true);
-                        editarSalvar_Btn.setVisible(false);
-                        guardaSalvar_Button.setVisible(true);
-                        this.pack();
+            main.atualizarListaGeral(guarda, 1, guarda.getMatricula());
 
-                    } else {
-                        JOptionPane.showMessageDialog(null, "Nome não pode estar vazio!");
-                    }
-                    if (!listaGuarda.getTurno().equals(turno)) {
-                        if (cela.listaGuardaAtribuido(listaGuarda.getMatricula(), "editar")) {
-                            listaGuarda.setTurno(turno);
-                            table.setValueAt(listaGuarda.getTurno(), linha, 2);
-                        }
-                    }
-                }
-            }
+            //configuração visual
+            cadastrarGuardaPanel.setVisible(false);
+            editarGuardaPanel.setVisible(true);
+            editarSalvar_Btn.setVisible(false);
+            guardaSalvar_Button.setVisible(true);
+            this.pack();
+
+        } else {
+            JOptionPane.showMessageDialog(null, "Nome não pode estar vazio!");
         }
+
     }//GEN-LAST:event_editarSalvar_BtnActionPerformed
 
     private void guardaRemover_BtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_guardaRemover_BtnActionPerformed
         linha = guardaLista_Table.getSelectedRow();
         if (linha >= 0) {
-            matricula = (String) table.getValueAt(linha, 1);
-            for (Guarda listaGuarda : listaGuardas) {
-                if (listaGuarda.getMatricula().equals(matricula)) {
-                    if (cela.listaGuardaAtribuido(listaGuarda.getMatricula(), "remover")) {
-                        listaGuardas.remove(listaGuarda);
-                        table.removeRow(linha);
-                        //atualiza lista de guarda em Cela
-                        cela.atualizarListasGuardas(listaGuardas);
-                        break;
-                    } else {
-                        JOptionPane.showMessageDialog(null, "Cela não pode ficar sem guarda! Atualmente, não há outro guarda disponível cadastrado neste turno.");
-                    }
+            matricula = (String) tableModel.getValueAt(linha, 1);
+
+            // Encontra o guarda correspondente
+            Guarda guardaParaRemover = null;
+            for (Object obj : main.getListaGeral()) {
+                if (obj instanceof Guarda guarda && guarda.getMatricula().equals(matricula)) {
+                    guardaParaRemover = guarda;
+                    break;
                 }
             }
-        } else
+
+            if (guardaParaRemover != null) {
+                main.atualizarListaGeral(guardaParaRemover, 2, matricula);
+            } else {
+                JOptionPane.showMessageDialog(null, "Guarda não encontrado!");
+            }
+        } else {
             JOptionPane.showMessageDialog(null, "Selecione um item.");
+        }
     }//GEN-LAST:event_guardaRemover_BtnActionPerformed
 
     private void guardaVoltar_ButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_guardaVoltar_ButtonActionPerformed
@@ -519,17 +509,19 @@ public class CadastrarGuardaInternalFrame extends javax.swing.JInternalFrame {
     }
 
     private boolean checarCPF_MatriculaDuplicado(String cpf, String matricula) {
-        if (guarda != null && listaGuardas != null) {
-            for (Guarda g : listaGuardas) {
-                if (g.getCpf().equals(cpf)) {
-                    JOptionPane.showMessageDialog(null, "CPF já cadastrado!");
-                    guardaCPF_FormattedTextField.setValue(null);
-                    return false;
-                }
-                if (g.getMatricula().equals(matricula)) {
-                    JOptionPane.showMessageDialog(null, "Matrícula já cadastrada!");
-                    guardaMatricula_TextField.setText(null);
-                    return false;
+        if (guarda != null && main.getListaGeral() != null) {
+            for (Object object : main.getListaGeral()) {
+                if (object instanceof Guarda guarda1) {
+                    if (guarda1.getCpf().equals(cpf)) {
+                        JOptionPane.showMessageDialog(null, "CPF já cadastrado!");
+                        guardaCPF_FormattedTextField.setValue(null);
+                        return false;
+                    }
+                    if (guarda1.getMatricula().equals(matricula)) {
+                        JOptionPane.showMessageDialog(null, "Matrícula já cadastrada!");
+                        guardaMatricula_TextField.setText(null);
+                        return false;
+                    }
                 }
             }
         }
@@ -566,4 +558,5 @@ public class CadastrarGuardaInternalFrame extends javax.swing.JInternalFrame {
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     // End of variables declaration//GEN-END:variables
+
 }

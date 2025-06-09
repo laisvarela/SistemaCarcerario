@@ -1,22 +1,25 @@
 package views;
 
-import classes.Cela;
-import classes.Guarda;
-import classes.Prisioneiro;
+import classes.AtualizavelListener;
+import classes.Entidade;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public class SistemaCarcerarioJanela extends javax.swing.JFrame {
 
     private CadastrarGuardaInternalFrame telaCadastroGuarda;
     private CadastrarCelaInternalFrame telaCadastroCela;
     private CadastrarPrisioneiroInternalFrame telaCadastroPrisioneiro;
+    private ArrayList<Object> listaGeral = new ArrayList<>();
+    private ArrayList<AtualizavelListener> listeners = new ArrayList<>();
 
     public SistemaCarcerarioJanela() {
         initComponents();
         this.pack();
-        telaCadastroGuarda = new CadastrarGuardaInternalFrame();
+        telaCadastroGuarda = new CadastrarGuardaInternalFrame(this);
         telaCadastroCela = new CadastrarCelaInternalFrame(telaCadastroGuarda, telaCadastroPrisioneiro);
         telaCadastroPrisioneiro = new CadastrarPrisioneiroInternalFrame(telaCadastroCela);
+
     }
 
     @SuppressWarnings("unchecked")
@@ -115,6 +118,69 @@ public class SistemaCarcerarioJanela extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+    //Registar listeners (telas que querem ser notificadas)
+
+    public void addListener(AtualizavelListener listener) {
+        listeners.add(listener);
+    }
+
+    // notificar todas as telas adicionadas
+    private void notificarAtualizacao(String tipo) {
+        for (AtualizavelListener listener : listeners) {
+            listener.dadosAtualizados(tipo);
+        }
+    }
+
+    public ArrayList<Object> getListaGeral() {
+        return listaGeral;
+    }
+
+    //passa o objeto e função desejada. 0 - adicionar; 1 - editar; 2 - remover.
+    public void atualizarListaGeral(Object item, int funcao, String valor) {
+        switch (funcao) {
+            case 0 ->
+                listaGeral.add(item);
+            case 1 ->
+                editar(item, valor);
+            case 2 ->
+                remover(item);
+            default ->
+                throw new AssertionError();
+        }
+    }
+
+    public void remover(Object item) {
+        if (listaGeral != null && !listaGeral.isEmpty()) {
+            // Usando Iterator para remoção segura
+            Iterator<Object> iterator = listaGeral.iterator();
+            while (iterator.hasNext()) {
+                Object object = iterator.next();
+                if (item.equals(object)) {
+                    iterator.remove();
+                    notificarAtualizacao(item.getClass().getSimpleName());
+                    System.out.println("Objeto removido: " + item.toString());
+                    break;
+                }
+            }
+        }
+    }
+
+    public void editar(Object itemNovo, String valor) {
+        if (!listaGeral.isEmpty()) {
+            for (int i = 0; i < listaGeral.size(); i++) {
+                Object item = listaGeral.get(i);
+                if (item instanceof Entidade && ((Entidade) item).getId().equals(valor)) {
+                    //verifica se são do mesmo tipo
+                    if (item.getClass() == itemNovo.getClass()) {
+                        listaGeral.set(i, itemNovo);
+                        notificarAtualizacao(itemNovo.getClass().getSimpleName());
+                        System.out.println("Objeto editado: " + itemNovo.toString());
+                        break;
+                    }
+                }
+            }
+        }
+    }
 
     private void gerarRelatorio_MenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_gerarRelatorio_MenuItemActionPerformed
 
