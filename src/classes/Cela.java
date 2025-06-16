@@ -4,28 +4,19 @@ public class Cela implements Registro, Entidade{
     private int numero, capacidade;
     private Guarda guardaDiurno, guardaNoturno;
     private Set<Prisioneiro> prisioneiros;
-    private boolean lotada;
 
-    public Cela(int numero, int capacidade, Guarda guardaDiurno, Guarda guardaNoturno, Set<Prisioneiro> prisioneiros, boolean lotada) {
+    public Cela(int numero, int capacidade, Guarda guardaDiurno, Guarda guardaNoturno, Set<Prisioneiro> prisioneiros) {
         this.numero = numero;
         this.capacidade = capacidade;
         this.guardaDiurno = guardaDiurno;
         this.guardaNoturno = guardaNoturno;
         this.prisioneiros = prisioneiros;
-        this.lotada = lotada;
     }
+
 
     public Cela() {
     }
 
-    
-    public boolean isLotada() {
-        return lotada;
-    }
-
-    public void setLotada(boolean lotada) {
-        this.lotada = lotada;
-    }
 
     // getters e setters
     public int getNumero() {

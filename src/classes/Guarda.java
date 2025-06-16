@@ -2,17 +2,19 @@ package classes;
 
 import java.time.LocalDate;
 
-public class Guarda extends Pessoa implements Registro, Entidade{
+public class Guarda extends Pessoa implements Registro, Entidade {
 
     private String matricula;
     private Turno turno;
     private LocalDate dataAdmissao;
+    private boolean atribuido;
 
-    public Guarda(String matricula, Turno turno, LocalDate dataAdmissao, String nome, String cpf, LocalDate dataNascimento) {
+    public Guarda(String matricula, Turno turno, LocalDate dataAdmissao, boolean atribuido, String nome, String cpf, LocalDate dataNascimento) {
         super(nome, cpf, dataNascimento);
         this.matricula = matricula;
         this.turno = turno;
         this.dataAdmissao = dataAdmissao;
+        this.atribuido = atribuido;
     }
 
     public Guarda(String nome, String cpf, LocalDate dataNascimento) {
@@ -20,6 +22,14 @@ public class Guarda extends Pessoa implements Registro, Entidade{
     }
 
     // getters e setters
+    public boolean isAtribuido() {
+        return atribuido;
+    }
+
+    public void setAtribuido(boolean atribuido) {
+        this.atribuido = atribuido;
+    }
+
     public LocalDate getDataAdmissao() {
         return dataAdmissao;
     }

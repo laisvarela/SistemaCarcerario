@@ -1,52 +1,36 @@
 package views;
 
+import classes.AtualizavelListener;
 import classes.Cela;
 import classes.Guarda;
 import classes.Prisioneiro;
 import classes.Turno;
-import classes.TurnoInvalidoException;
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.Set;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
-public class CadastrarCelaInternalFrame extends javax.swing.JInternalFrame {
-
-    private ArrayList<Cela> listaCela = new ArrayList<>();
-    private ArrayList<Guarda> listaGuardas = new ArrayList<>();
-    private Set<Prisioneiro> listaPrisioneiros = new HashSet<>();
+public class CadastrarCelaInternalFrame extends javax.swing.JInternalFrame implements AtualizavelListener {
+    
     DefaultListModel<String> modelDiurno = new DefaultListModel<>();
     DefaultListModel<String> modelNoturno = new DefaultListModel<>();
-    DefaultTableModel modelTabela;
-    private CadastrarGuardaInternalFrame guardas;
-    private CadastrarPrisioneiroInternalFrame prisioneiros;
+    DefaultTableModel tableModel;
+    private Set<Prisioneiro> prisioneiro = new HashSet<>();
     private Cela cela;
-
-    public CadastrarCelaInternalFrame(CadastrarGuardaInternalFrame guardaFrame, CadastrarPrisioneiroInternalFrame prisioneiroFrame) {
+    private SistemaCarcerarioJanela main;
+    
+    public CadastrarCelaInternalFrame(SistemaCarcerarioJanela main) {
         initComponents();
+        this.main = main;
         this.celaCadastroPanel.setVisible(false);
         this.pack();
-        guardas = guardaFrame;
-        prisioneiros = prisioneiroFrame;
-        modelTabela = (DefaultTableModel) celaTabela_Table.getModel();
-        atualizarConjuntoPrisioneiros();
+        tableModel = (DefaultTableModel) celaTabela_Table.getModel();
+        celaGuardaDiurno_List.setModel(modelDiurno);
+        celaGuardaNoturno_List.setModel(modelNoturno);
+        celaEditarSalvar_Btn.setVisible(false);
     }
-
-    public CadastrarCelaInternalFrame() {
-
-    }
-
-    public ArrayList<Cela> getListaCela() {
-        return listaCela;
-    }
-
-    public void setListaCela(ArrayList<Cela> listaCela) {
-        this.listaCela = listaCela;
-    }
-
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -67,6 +51,7 @@ public class CadastrarCelaInternalFrame extends javax.swing.JInternalFrame {
         celaLimpar_Btn = new javax.swing.JButton();
         jSeparator2 = new javax.swing.JSeparator();
         celaVoltar_Btn = new javax.swing.JButton();
+        celaEditarSalvar_Btn = new javax.swing.JButton();
         celaListaPanel = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
         jScrollPane4 = new javax.swing.JScrollPane();
@@ -107,11 +92,23 @@ public class CadastrarCelaInternalFrame extends javax.swing.JInternalFrame {
         });
 
         celaLimpar_Btn.setText("Limpar");
+        celaLimpar_Btn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                celaLimpar_BtnActionPerformed(evt);
+            }
+        });
 
         celaVoltar_Btn.setText("Voltar");
         celaVoltar_Btn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 celaVoltar_BtnActionPerformed(evt);
+            }
+        });
+
+        celaEditarSalvar_Btn.setText("Salvar");
+        celaEditarSalvar_Btn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                celaEditarSalvar_BtnActionPerformed(evt);
             }
         });
 
@@ -135,10 +132,12 @@ public class CadastrarCelaInternalFrame extends javax.swing.JInternalFrame {
                                 .addComponent(celaCapaciade_ComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(37, 37, 37))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, celaCadastroPanelLayout.createSequentialGroup()
-                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addGap(46, 46, 46)
                                 .addComponent(celaVoltar_Btn)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(celaLimpar_Btn)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(celaEditarSalvar_Btn)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(celaSalvar_Btn))))
                     .addGroup(celaCadastroPanelLayout.createSequentialGroup()
@@ -150,7 +149,7 @@ public class CadastrarCelaInternalFrame extends javax.swing.JInternalFrame {
                         .addGroup(celaCadastroPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel5))
-                        .addGap(0, 37, Short.MAX_VALUE))
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addComponent(jSeparator2, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addContainerGap())
         );
@@ -179,7 +178,8 @@ public class CadastrarCelaInternalFrame extends javax.swing.JInternalFrame {
                 .addGroup(celaCadastroPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(celaSalvar_Btn)
                     .addComponent(celaLimpar_Btn)
-                    .addComponent(celaVoltar_Btn))
+                    .addComponent(celaVoltar_Btn)
+                    .addComponent(celaEditarSalvar_Btn))
                 .addContainerGap())
         );
 
@@ -191,7 +191,7 @@ public class CadastrarCelaInternalFrame extends javax.swing.JInternalFrame {
 
             },
             new String [] {
-                "Número", "Capacidade", "Lotada", "Guarda Diurno", "Guarda Noturno"
+                "Número", "Capacidade", "Guarda Diurno", "Guarda Noturno"
             }
         ));
         jScrollPane4.setViewportView(celaTabela_Table);
@@ -204,6 +204,11 @@ public class CadastrarCelaInternalFrame extends javax.swing.JInternalFrame {
         });
 
         celaEditar_Btn.setText("Editar");
+        celaEditar_Btn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                celaEditar_BtnActionPerformed(evt);
+            }
+        });
 
         celaRemover_Btn.setText("Remover");
 
@@ -261,88 +266,75 @@ public class CadastrarCelaInternalFrame extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    // método para atualizar as listas de guarda diurno e guarda noturno
-    public void atualizarListasGuardas(ArrayList<Guarda> lista) {
-        
-        // pega a lista de guardas que é passada como parametro
-        if (guardas != null && !lista.isEmpty()) {
-            for (Guarda guarda : lista) {
-                if (guarda.getTurno().equals(Turno.DIURNO)) {
-                    modelDiurno.addElement(guarda.getMatricula());
-                } else {
-                    modelNoturno.addElement(guarda.getMatricula());
-                }
-            }
-            celaGuardaDiurno_List.setModel(modelDiurno);
-            celaGuardaNoturno_List.setModel(modelNoturno);
+    // atualiza as listas sempre que ocorre uma alteração
+    @Override
+    public void dadosAtualizados(String tipo) {
+        if (tipo.equals("Cela")) {
+            atualizaTabela();
+            atualizaListaPrisioneiros();
+            atualizaListasGuardas();
         }
     }
 
-    public void atualizarTabela() {
-
-    }
-
-    // método para implementar em CadastrarGuardaInternalFrame para verificar se o guarda já está atribuido
-    public boolean listaGuardaAtribuido(String matricula, String funcao) {
-        //para cada guarda na lista diurno/noturno, se matricula passada por parametro for igual a matricula do item na lista && 
-        //lista de guarda diurno/noturno não for vazia, retorna true, ou seja, permite a remoção defiinitva do guarda ou a edição de turno
-
-        if (funcao.equalsIgnoreCase("editar")) {
-            for (Guarda guarda : listaGuardas) {
-                if (matricula.equals(guarda.getMatricula())) {
-                    JOptionPane.showMessageDialog(null, new TurnoInvalidoException().getMsg());
-                    return false;
-                }
-            }
-        } else if (funcao.equalsIgnoreCase("remover")) {
-            for (Guarda guarda : listaGuardas) {
-                if (matricula.equals(guarda.getMatricula()) && !modelNoturno.isEmpty() || !modelDiurno.isEmpty()) {
-                    return false;
+    // método para atualizar as jList de guarda diurno e guarda noturno
+    public void atualizaListasGuardas() {
+        if (!main.getListaGeral().isEmpty()) {
+            for (Object obj : main.getListaGeral()) {
+                if (obj instanceof Guarda guarda) {
+                    if (guarda.getTurno().equals(Turno.DIURNO)) {
+                        modelDiurno.addElement(guarda.getMatricula());
+                    } else {
+                        modelNoturno.addElement(guarda.getMatricula());
+                    }
                 }
             }
         }
-        return true;
     }
 
-    private void atualizarConjuntoPrisioneiros() {
-        if (prisioneiros != null && prisioneiros.getConjuntoPrisioneiros() != null) {
-            Iterator<Prisioneiro> iterator = prisioneiros.getConjuntoPrisioneiros().iterator();
-            while (iterator.hasNext()) {
-                listaPrisioneiros.add(iterator.next());
+    // método para atualizar tabela com os dados da cela
+    private void atualizaTabela() {
+        tableModel.setRowCount(0); // Limpa a tabela
+        if (!main.getListaGeral().isEmpty()) {
+            for (Object obj : main.getListaGeral()) {
+                if (obj instanceof Cela c) {
+                    tableModel.addRow(new Object[]{c.getNumero(), c.getCapacidade(),
+                        c.getGuardaDiurno(), c.getGuardaNoturno()});
+                }
+            }
+        }
+    }
+
+    // método para atualizar a lista de prisioneiros
+    private void atualizaListaPrisioneiros() {
+        if (!main.getListaGeral().isEmpty()) {
+            for (Object obj : main.getListaGeral()) {
+                if (obj instanceof Prisioneiro p && !p.getCela().isEmpty()) {
+                    prisioneiro.add(p);
+                }
             }
         }
     }
     private void celaAdicionar_BtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_celaAdicionar_BtnActionPerformed
-        //atualiza 
-        atualizarConjuntoPrisioneiros();
         celaListaPanel.setVisible(false);
         celaCadastroPanel.setVisible(true);
         this.pack();
     }//GEN-LAST:event_celaAdicionar_BtnActionPerformed
 
     private void celaSalvar_BtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_celaSalvar_BtnActionPerformed
-        boolean lotado = false;
         Guarda guardaDiurno = null;
         Guarda guardaNoturno = null;
-        if (listaPrisioneiros != null && listaPrisioneiros.size() >= Integer.parseInt(celaCapaciade_ComboBox.getSelectedItem().toString())) {
-            lotado = true;
-        }
         if (!celaNumero_FomattedField.getText().isBlank()) {
             if (!celaGuardaDiurno_List.isSelectionEmpty() && !celaGuardaNoturno_List.isSelectionEmpty()) {
-                
 
                 // adiciona novo objeto Cela
-                cela = new Cela(Integer.parseInt(celaNumero_FomattedField.getText()), Integer.parseInt(celaCapaciade_ComboBox.getSelectedItem().toString()),
-                        guardaDiurno, guardaNoturno, listaPrisioneiros, lotado);
+                cela = new Cela(Integer.parseInt(celaNumero_FomattedField.getText()),
+                        Integer.parseInt(celaCapaciade_ComboBox.getSelectedItem().toString()),
+                        guardaDiurno, guardaNoturno, prisioneiro);
 
+                // adiciona na lista geral
+                main.atualizarListaGeral(cela, 0, celaNumero_FomattedField.getText());
+                
                 JOptionPane.showMessageDialog(null, "Cela cadastrada com sucesso!");
-
-                String lotadoString;
-                if (lotado) {
-                    lotadoString = "Sim";
-                } else {
-                    lotadoString = "Não";
-                }
 
                 // configuração visual
                 celaListaPanel.setVisible(true);
@@ -358,14 +350,87 @@ public class CadastrarCelaInternalFrame extends javax.swing.JInternalFrame {
     private void celaVoltar_BtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_celaVoltar_BtnActionPerformed
         celaListaPanel.setVisible(true);
         celaCadastroPanel.setVisible(false);
+        celaEditarSalvar_Btn.setVisible(false);
+        celaEditar_Btn.setVisible(true);
         this.pack();
     }//GEN-LAST:event_celaVoltar_BtnActionPerformed
 
+    private void celaEditarSalvar_BtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_celaEditarSalvar_BtnActionPerformed
+        Guarda diurno = null, noturno = null;
+        if (!celaNumero_FomattedField.getText().isBlank()) {
+            if (!celaGuardaDiurno_List.isSelectionEmpty() && !celaGuardaNoturno_List.isSelectionEmpty()) {
+                diurno.setMatricula(celaGuardaDiurno_List.getSelectedValue());
+                noturno.setMatricula(celaGuardaNoturno_List.getSelectedValue());
+                
+                cela = new Cela(Integer.parseInt(celaNumero_FomattedField.getText()),
+                        Integer.parseInt(celaCapaciade_ComboBox.getSelectedItem().toString()),
+                         diurno, noturno, prisioneiro);
+                
+                main.atualizarListaGeral(cela, 1, String.valueOf(cela.getNumero()));
+                
+            } else {
+                JOptionPane.showMessageDialog(null, "Guarda diurno e noturno precisa ser selecionado.");
+            }
+            
+        } else {
+            JOptionPane.showMessageDialog(null, "Número de cela não pode estar vazio!");
+        }
+
+    }//GEN-LAST:event_celaEditarSalvar_BtnActionPerformed
+
+    private void celaEditar_BtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_celaEditar_BtnActionPerformed
+        int linha = celaTabela_Table.getSelectedRow();
+        if (linha >= 0) { // uma linha deve estar selecionada para habilitar a tela de editar
+            int numero = Integer.parseInt(tableModel.getValueAt(linha, 1).toString());
+            for (Object obj : main.getListaGeral()) {
+                if (obj instanceof Cela c && c.getNumero() == numero) {
+                    // preenche os campos com os dados do guarda selecionado
+                    celaNumero_FomattedField.setText(String.valueOf(c.getNumero()));
+                    celaCapaciade_ComboBox.setSelectedItem(c.getCapacidade());
+                    break;
+                }
+            }
+            // chama o método que deixa enabled apenas os campos que podem ser editados
+            editarConfig();
+        } else { // senão pede para selecionar um item
+            JOptionPane.showMessageDialog(null, "Selecione um item.");
+        }
+    }//GEN-LAST:event_celaEditar_BtnActionPerformed
+
+    private void celaLimpar_BtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_celaLimpar_BtnActionPerformed
+        limpar();
+    }//GEN-LAST:event_celaLimpar_BtnActionPerformed
+    
+    private void editarConfig() {
+        if (!main.getListaGeral().isEmpty()) {
+            for (Object obj : main.getListaGeral()) {
+                if (obj instanceof Cela c) {
+                    if (c.getGuardaDiurno().isAtribuido()) {
+                        celaGuardaDiurno_List.setEnabled(false);
+                    }
+                    if (c.getGuardaNoturno().isAtribuido()) {
+                        celaGuardaNoturno_List.setEnabled(false);
+                    }
+                }
+            }
+        }
+        celaListaPanel.setVisible(false);
+        celaCadastroPanel.setVisible(true);
+        celaSalvar_Btn.setVisible(false);
+        celaEditarSalvar_Btn.setVisible(true);
+        this.pack();
+    }
+    
+    private void limpar() {
+        celaNumero_FomattedField.setText(null);
+        celaCapaciade_ComboBox.setSelectedItem(1);
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton celaAdicionar_Btn;
     private javax.swing.JPanel celaCadastroPanel;
     private javax.swing.JComboBox<String> celaCapaciade_ComboBox;
+    private javax.swing.JButton celaEditarSalvar_Btn;
     private javax.swing.JButton celaEditar_Btn;
     private javax.swing.JList<String> celaGuardaDiurno_List;
     private javax.swing.JList<String> celaGuardaNoturno_List;
@@ -387,4 +452,5 @@ public class CadastrarCelaInternalFrame extends javax.swing.JInternalFrame {
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     // End of variables declaration//GEN-END:variables
+
 }

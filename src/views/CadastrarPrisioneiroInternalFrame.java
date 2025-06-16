@@ -1,31 +1,29 @@
 package views;
 
+import classes.AtualizavelListener;
 import classes.Cela;
 import classes.Prisioneiro;
 import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.HashSet;
-import java.util.Set;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
-public class CadastrarPrisioneiroInternalFrame extends javax.swing.JInternalFrame {
+public class CadastrarPrisioneiroInternalFrame extends javax.swing.JInternalFrame implements AtualizavelListener {
 
-    private Set<Prisioneiro> conjuntoPrisioneiros = new HashSet<>();
     DefaultTableModel modelTable, modelCelaTable;
     private Prisioneiro prisioneiro;
     private DateTimeFormatter formatter;
     private LocalDate dataNasci, dataPrisao;
-    CadastrarCelaInternalFrame celas;
+    private SistemaCarcerarioJanela main;
 
-    public CadastrarPrisioneiroInternalFrame(CadastrarCelaInternalFrame celaFrame) {
+    public CadastrarPrisioneiroInternalFrame(SistemaCarcerarioJanela main) {
         initComponents();
+        this.main = main;
+        main.addListener(this);
         this.cadastrarPrisioneiroPanel.setVisible(false);
         modelTable = (DefaultTableModel) prisioneiroLista_Table.getModel();
         modelCelaTable = (DefaultTableModel) prisioneiroCela_Table.getModel();
-        celas = celaFrame;
-        adicionarCela();
     }
 
     @SuppressWarnings("unchecked")
@@ -336,16 +334,18 @@ public class CadastrarPrisioneiroInternalFrame extends javax.swing.JInternalFram
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-    public Set<Prisioneiro> getConjuntoPrisioneiros() {
-        return conjuntoPrisioneiros;
+
+    @Override
+    public void dadosAtualizados(String tipo) {
+        if (tipo.equals("Prisioneiro")) {
+            atualizaTabela();
+        }
     }
 
-    public void setConjuntoPrisioneiros(Set<Prisioneiro> conjuntoPrisioneiros) {
-        this.conjuntoPrisioneiros = conjuntoPrisioneiros;
-    }
+    private void atualizaTabela() {
 
+    }
     private void prisioneiroAdicionar_BtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_prisioneiroAdicionar_BtnActionPerformed
-        adicionarCela();
         cadastrarPrisioneiroPanel.setVisible(true);
         editarPrisioneiroPanel.setVisible(false);
         this.pack();
@@ -359,12 +359,7 @@ public class CadastrarPrisioneiroInternalFrame extends javax.swing.JInternalFram
                 dataPrisao = LocalDate.parse(prisioneiroDataPrisao_FormattedTextField.getText(), formatter);
                 if (checarCPF_NumDuplicado(prisioneiroCPF_FormattedTextField.getText(), prisioneiroNumRegistro_TextField.getText())) {
                     // cria um objeto Prisioneiro passando como parametro os valores informados na tela
-                    prisioneiro = new Prisioneiro(prisioneiroNome_TextField.getText(), prisioneiroCPF_FormattedTextField.getText(),
-                            dataNasci, prisioneiroNumRegistro_TextField.getText(), dataPrisao,
-                            Integer.parseInt(prisioneiroPenaFormattedTextField.getText()));
-
-                    // adiciona na lista
-                    conjuntoPrisioneiros.add(prisioneiro);
+                    
 
                     // adiciona na tabela
                     modelTable.addRow(new Object[]{prisioneiroNome_TextField.getText(), prisioneiroNumRegistro_TextField.getText(),
@@ -414,25 +409,23 @@ public class CadastrarPrisioneiroInternalFrame extends javax.swing.JInternalFram
     }
 
     private void adicionarCela() {
-        if (celas != null && celas.getListaCela() != null) {
-            for (Cela cela : celas.getListaCela()) {
-                modelTable.addRow(new Object[]{cela.getNumero(), cela.getCapacidade()});
-            }
-        }
+        
     }
 
-    private boolean checarCPF_NumDuplicado(String cpf, String numero) {
-        if (prisioneiro != null && conjuntoPrisioneiros != null) {
-            for (Prisioneiro p : conjuntoPrisioneiros) {
-                if (p.getCpf().equals(cpf)) {
-                    JOptionPane.showMessageDialog(null, "CPF já está cadastrado");
-                    prisioneiroCPF_FormattedTextField.setValue(null);
-                    return false;
-                }
-                if(p.getNumRegistro().equals(numero)){
-                    JOptionPane.showMessageDialog(null, "Número de Registro já está cadastrado");
-                    prisioneiroNumRegistro_TextField.setText(null);
-                    return false;
+    private boolean checarCPF_NumDuplicado(String cpf, String num) {
+        if (prisioneiro != null && main.getListaGeral() != null) {
+            for (Object object : main.getListaGeral()) {
+                if (object instanceof Prisioneiro p) {
+                    if (p.getCpf().equals(cpf)) {
+                        JOptionPane.showMessageDialog(null, "CPF já cadastrado!");
+                        prisioneiroCPF_FormattedTextField.setValue(null);
+                        return false;
+                    }
+                    if (p.getNumRegistro().equals(num)) {
+                        JOptionPane.showMessageDialog(null, "Número de registro já cadastrado!");
+                        prisioneiroNumRegistro_TextField.setText(null);
+                        return false;
+                    }
                 }
             }
         }
@@ -472,4 +465,5 @@ public class CadastrarPrisioneiroInternalFrame extends javax.swing.JInternalFram
     private javax.swing.JButton prisioneiroSalvar_Button;
     private javax.swing.JButton prisioneiroVoltar_Button;
     // End of variables declaration//GEN-END:variables
+
 }

@@ -17,9 +17,8 @@ public class SistemaCarcerarioJanela extends javax.swing.JFrame {
         initComponents();
         this.pack();
         telaCadastroGuarda = new CadastrarGuardaInternalFrame(this);
-        telaCadastroCela = new CadastrarCelaInternalFrame(telaCadastroGuarda, telaCadastroPrisioneiro);
-        telaCadastroPrisioneiro = new CadastrarPrisioneiroInternalFrame(telaCadastroCela);
-
+        telaCadastroCela = new CadastrarCelaInternalFrame(this);
+        telaCadastroPrisioneiro = new CadastrarPrisioneiroInternalFrame(this);
     }
 
     @SuppressWarnings("unchecked")

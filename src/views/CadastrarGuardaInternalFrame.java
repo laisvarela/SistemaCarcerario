@@ -311,11 +311,11 @@ public class CadastrarGuardaInternalFrame extends javax.swing.JInternalFrame imp
     @Override
     public void dadosAtualizados(String tipo) {
         if (tipo.equals("Guarda")) {
-            atualizarTabela();
+            atualizaTabela();
         }
     }
 
-    private void atualizarTabela() {
+    private void atualizaTabela() {
         tableModel.setRowCount(0); // Limpa a tabela
         for (Object obj : main.getListaGeral()) {
             if (obj instanceof Guarda guarda) {
@@ -346,7 +346,7 @@ public class CadastrarGuardaInternalFrame extends javax.swing.JInternalFrame imp
                 }
                 if (checarCPF_MatriculaDuplicado(guardaCPF_FormattedTextField.getText(), guardaMatricula_TextField.getText())) {
                     // cria um objeto Guarda passando como parametro os valores informados na tela
-                    guarda = new Guarda(matricula, Turno.valueOf(turno), dataAdmissao,
+                    guarda = new Guarda(matricula, Turno.valueOf(turno), dataAdmissao, false,
                             guardaNome_TextField.getText(), guardaCPF_FormattedTextField.getText(),
                             dataNasci);
 
@@ -412,10 +412,9 @@ public class CadastrarGuardaInternalFrame extends javax.swing.JInternalFrame imp
         } else {
             turno = Turno.NOTURNO;
         }
-        linha = guardaLista_Table.getSelectedRow();
 
         if (!guardaNome_TextField.getText().isBlank()) {
-            guarda = new Guarda(guardaMatricula_TextField.getText(), turno, dataAdmissao,
+            guarda = new Guarda(guardaMatricula_TextField.getText(), turno, dataAdmissao, false,
                     guardaNome_TextField.getText(), guardaCPF_FormattedTextField.getText(), dataNasci);
 
             main.atualizarListaGeral(guarda, 1, guarda.getMatricula());
