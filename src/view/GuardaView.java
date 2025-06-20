@@ -15,7 +15,7 @@ public class GuardaView extends javax.swing.JInternalFrame implements Atualizave
     private Guarda guarda;
     public DefaultTableModel tableModel;
     private DateTimeFormatter formatter;
-    private LocalDate dataNasci, dataAdmissao;
+    private LocalDate dataNasci;
     private int linha;
     private String matricula;
     private final SistemaCarcerarioView main;
@@ -51,8 +51,6 @@ public class GuardaView extends javax.swing.JInternalFrame implements Atualizave
         guardaLimpar_Button = new javax.swing.JButton();
         jSeparator2 = new javax.swing.JSeparator();
         jLabel7 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
-        guardaDataAdmissao_FormattedTextField = new javax.swing.JFormattedTextField();
         guardaMatricula_TextField = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
         guarda_ComboBox = new javax.swing.JComboBox<>();
@@ -115,14 +113,6 @@ public class GuardaView extends javax.swing.JInternalFrame implements Atualizave
         jLabel7.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel7.setText("Informações");
 
-        jLabel6.setText("Data Admissão:");
-
-        try {
-            guardaDataAdmissao_FormattedTextField.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
-        } catch (java.text.ParseException ex) {
-            ex.printStackTrace();
-        }
-
         jLabel9.setText("Turno:");
 
         guarda_ComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Diurno", "Noturno" }));
@@ -168,11 +158,7 @@ public class GuardaView extends javax.swing.JInternalFrame implements Atualizave
                                 .addGap(18, 18, 18)
                                 .addComponent(jLabel9)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(guarda_ComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(jLabel6)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(guardaDataAdmissao_FormattedTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(guarda_ComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(jLabel1)
                             .addComponent(jLabel7)
                             .addGroup(cadastrarGuardaPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
@@ -188,7 +174,7 @@ public class GuardaView extends javax.swing.JInternalFrame implements Atualizave
                                     .addComponent(jLabel4)
                                     .addGap(18, 18, 18)
                                     .addComponent(guardaCPF_FormattedTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(0, 8, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         cadastrarGuardaPanelLayout.setVerticalGroup(
@@ -213,8 +199,6 @@ public class GuardaView extends javax.swing.JInternalFrame implements Atualizave
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(cadastrarGuardaPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
-                    .addComponent(jLabel6)
-                    .addComponent(guardaDataAdmissao_FormattedTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(guardaMatricula_TextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel9)
                     .addComponent(guarda_ComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -358,12 +342,12 @@ public class GuardaView extends javax.swing.JInternalFrame implements Atualizave
             try {
                 formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy"); // padrão de formatação para data
                 dataNasci = LocalDate.parse(guardaDataNasci_FormattedTextField.getText(), formatter);
-                dataAdmissao = LocalDate.parse(guardaDataAdmissao_FormattedTextField.getText(), formatter);
+
                 matricula = guardaMatricula_TextField.getText();
 
                 if (checarCPF_MatriculaDuplicado(guardaCPF_FormattedTextField.getText(), guardaMatricula_TextField.getText())) {
                     // cria um objeto Guarda passando como parametro os valores informados na tela
-                    guarda = new Guarda(matricula, guarda_ComboBox.getSelectedItem().toString(), dataAdmissao, false,
+                    guarda = new Guarda(matricula, guarda_ComboBox.getSelectedItem().toString(), false,
                             guardaNome_TextField.getText(), guardaCPF_FormattedTextField.getText().replaceAll("[.-]", ""),
                             dataNasci);
 
@@ -395,10 +379,21 @@ public class GuardaView extends javax.swing.JInternalFrame implements Atualizave
 
     private void guardaEditar_BtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_guardaEditar_BtnActionPerformed
         linha = guardaLista_Table.getSelectedRow();
+
         if (linha >= 0) { // uma linha deve estar selecionada para habilitar a tela de editar
             matricula = (String) tableModel.getValueAt(linha, 1);
-
-            // chama o método que deixa enabled apenas os campos que podem ser editados
+            ArrayList<Guarda> guardas = guardaController.listarGuardas();
+            for (Guarda guarda : guardas) {
+                if (guarda.getMatricula().equals(matricula)) {
+                    LocalDate dataNascimento = guarda.getDataNascimento();
+                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+                    String dataFormatada = dataNascimento.format(formatter);
+                    guardaNome_TextField.setText(guarda.getNome());
+                    guardaCPF_FormattedTextField.setText(guarda.getCpf());
+                    guardaMatricula_TextField.setText(guarda.getMatricula());
+                    guardaDataNasci_FormattedTextField.setText(dataFormatada);
+                }
+            }
             editarConfig();
         } else { // senão pede para selecionar um item
             JOptionPane.showMessageDialog(null, "Selecione um item.");
@@ -407,13 +402,12 @@ public class GuardaView extends javax.swing.JInternalFrame implements Atualizave
     }//GEN-LAST:event_guardaEditar_BtnActionPerformed
 
     private void editarSalvar_BtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editarSalvar_BtnActionPerformed
-
         if (!guardaNome_TextField.getText().isBlank()) {
-            guarda = new Guarda(guardaMatricula_TextField.getText(), guarda_ComboBox.getSelectedItem().toString(), dataAdmissao, false,
+            guarda = new Guarda(guardaMatricula_TextField.getText(), guarda_ComboBox.getSelectedItem().toString(), false,
                     guardaNome_TextField.getText(), guardaCPF_FormattedTextField.getText().replaceAll("[.-]", ""), dataNasci);
 
             guardaController.editarGuarda(guarda);
-
+            atualizaTabela();
             //configuração visual
             cadastrarGuardaPanel.setVisible(false);
             editarGuardaPanel.setVisible(true);
@@ -432,6 +426,7 @@ public class GuardaView extends javax.swing.JInternalFrame implements Atualizave
         if (linha >= 0) {
             matricula = (String) tableModel.getValueAt(linha, 1);
             guardaController.remover(matricula);
+            atualizaTabela();
         } else {
             JOptionPane.showMessageDialog(null, "Selecione um item.");
         }
@@ -467,7 +462,6 @@ public class GuardaView extends javax.swing.JInternalFrame implements Atualizave
     // método para limpar campos
     private void limpar() {
         guardaCPF_FormattedTextField.setValue(null);
-        guardaDataAdmissao_FormattedTextField.setValue(null);
         guardaDataNasci_FormattedTextField.setValue(null);
         guardaMatricula_TextField.setText(null);
         guardaNome_TextField.setText(null);
@@ -479,8 +473,7 @@ public class GuardaView extends javax.swing.JInternalFrame implements Atualizave
         return !(guardaNome_TextField.getText().isEmpty()
                 || guardaCPF_FormattedTextField.getText().replaceAll("[.-]", "").isBlank()
                 || guardaDataNasci_FormattedTextField.getText().replaceAll("/", "").isBlank()
-                || guardaMatricula_TextField.getText().isBlank()
-                || guardaDataAdmissao_FormattedTextField.getText().replaceAll("/", "").isBlank());
+                || guardaMatricula_TextField.getText().isBlank());
     }
 
     private void editarConfig() {
@@ -489,7 +482,6 @@ public class GuardaView extends javax.swing.JInternalFrame implements Atualizave
         guardaDataNasci_FormattedTextField.setEnabled(false);
         guardaCPF_FormattedTextField.setEnabled(false);
         guardaMatricula_TextField.setEnabled(false);
-        guardaDataAdmissao_FormattedTextField.setEnabled(false);
         editarSalvar_Btn.setVisible(true);
         guardaSalvar_Button.setVisible(false);
         guardaLimpar_Button.setVisible(false);
@@ -503,7 +495,6 @@ public class GuardaView extends javax.swing.JInternalFrame implements Atualizave
         guardaDataNasci_FormattedTextField.setEnabled(true);
         guardaCPF_FormattedTextField.setEnabled(true);
         guardaMatricula_TextField.setEnabled(true);
-        guardaDataAdmissao_FormattedTextField.setEnabled(true);
         editarSalvar_Btn.setVisible(false);
         guardaSalvar_Button.setVisible(true);
         this.pack();
@@ -537,7 +528,6 @@ public class GuardaView extends javax.swing.JInternalFrame implements Atualizave
     private javax.swing.JButton guardaBuscar_Btn;
     private javax.swing.JTextField guardaBuscar_TextField;
     private javax.swing.JFormattedTextField guardaCPF_FormattedTextField;
-    private javax.swing.JFormattedTextField guardaDataAdmissao_FormattedTextField;
     private javax.swing.JFormattedTextField guardaDataNasci_FormattedTextField;
     private javax.swing.JButton guardaEditar_Btn;
     private javax.swing.JButton guardaLimpar_Button;
@@ -553,7 +543,6 @@ public class GuardaView extends javax.swing.JInternalFrame implements Atualizave
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;

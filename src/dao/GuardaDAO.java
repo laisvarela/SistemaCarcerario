@@ -26,7 +26,6 @@ public class GuardaDAO {
 
             //formata LocalDate para SQL Date
             java.sql.Date dataNascSql = java.sql.Date.valueOf(guarda.getDataNascimento());
-            java.sql.Date dataAdmissaoSql = java.sql.Date.valueOf(guarda.getDataAdmissao());
 
             // preenche os valores da String sql
             stmt.setString(1, guarda.getNome());
@@ -34,7 +33,6 @@ public class GuardaDAO {
             stmt.setDate(3, dataNascSql);
             stmt.setString(4, guarda.getMatricula());
             stmt.setString(5, String.valueOf(guarda.getTurno()));
-            stmt.setDate(6, dataAdmissaoSql);
             stmt.setBoolean(7, guarda.isAtribuido());
 
             //adicionar no bando de dados
@@ -73,7 +71,6 @@ public class GuardaDAO {
                     g.setDataNascimento(LocalDate.parse(rs.getString("dataNascimento")));
                     g.setMatricula(rs.getString("matricula"));
                     g.setTurno(rs.getString("turno"));
-                    g.setDataAdmissao(LocalDate.parse(rs.getString("dataAdmissao")));
                     g.setAtribuido(rs.getBoolean("atribuido"));
                     listaGuardas.add(g);
                 }
@@ -143,7 +140,7 @@ public class GuardaDAO {
             stmt.setString(1, guardaNovo.getNome());
             stmt.setString(2, guardaNovo.getTurno());
             stmt.setString(3, guardaNovo.getMatricula());
-            stmt.execute();
+            stmt.executeUpdate();
             System.out.println("Guarda editado com sucesso.");
         } catch (SQLException e) {
             System.out.println("Erro ao editar guarda. \nErro: " + e);
@@ -171,8 +168,8 @@ public class GuardaDAO {
             connection = new ConexaoDAO().conectorBD();
             stmt = connection.prepareStatement(sql);
             stmt.executeUpdate();
-            System.out.println("Guarda removido com sucesso!");
-        } catch (SQLException e) {
+            System.out.println("Guarda removido com sucesso");
+        }  catch (SQLException e) {
             System.out.println("Erro ao remover guarda. \nErro: " + e);
         } finally {
             try {

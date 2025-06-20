@@ -31,7 +31,6 @@ public class ConexaoDAO {
                         dataNascimento DATE NOT NULL,
                         matricula VARCHAR(20) UNIQUE NOT NULL,
                         turno VARCHAR(10) NOT NULL,
-                        dataAdmissao DATE NOT NULL,
                         atribuido BOOLEAN NOT NULL DEFAULT false
                     )""");
 

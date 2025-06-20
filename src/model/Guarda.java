@@ -8,14 +8,12 @@ public class Guarda extends Pessoa implements Registro, Entidade {
 
     private String matricula;
     private String turno;
-    private LocalDate dataAdmissao;
     private boolean atribuido;
 
-    public Guarda(String matricula, String turno, LocalDate dataAdmissao, boolean atribuido, String nome, String cpf, LocalDate dataNascimento) {
+    public Guarda(String matricula, String turno,  boolean atribuido, String nome, String cpf, LocalDate dataNascimento) {
         super(nome, cpf, dataNascimento);
         this.matricula = matricula;
         this.turno = turno;
-        this.dataAdmissao = dataAdmissao;
         this.atribuido = atribuido;
     }
 
@@ -30,14 +28,6 @@ public class Guarda extends Pessoa implements Registro, Entidade {
 
     public void setAtribuido(boolean atribuido) {
         this.atribuido = atribuido;
-    }
-
-    public LocalDate getDataAdmissao() {
-        return dataAdmissao;
-    }
-
-    public void setDataAdmissao(LocalDate dataAdmissao) {
-        this.dataAdmissao = dataAdmissao;
     }
 
     public String getMatricula() {

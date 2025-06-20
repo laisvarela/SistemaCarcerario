@@ -16,7 +16,12 @@ public class GuardaController {
     }
 
     public void editarGuarda(Guarda guardaNovo) {
-        new Guarda(null, null, null).editarGuarda(guardaNovo);
+        Guarda g = new Guarda(null, null, null);
+        if (guardaNovo != null) {
+            g.editarGuarda(guardaNovo);
+        } else {
+            JOptionPane.showMessageDialog(null, "Não foi possível editar o guarda.");
+        }
     }
 
     public ArrayList<Guarda> listarGuardas() {
