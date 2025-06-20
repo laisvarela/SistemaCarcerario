@@ -1,4 +1,4 @@
-package classes;
+package model;
 import java.util.Set;
 public class Cela implements Registro, Entidade{
     private int numero, capacidade;

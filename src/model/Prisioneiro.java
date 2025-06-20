@@ -1,4 +1,4 @@
-package classes;
+package model;
 
 import java.time.LocalDate;
 
@@ -60,7 +60,8 @@ public class Prisioneiro extends Pessoa implements Registro, Entidade {
         return "Prisioneiro: " + getNome() + "\n"
                 + "Registro: " + numRegistro + "\n"
                 + "Data de Prisão: " + dataPrisao + "\n"
-                + "Pena: " + pena + " anos\n";
+                + "Pena: " + pena + " anos\n"
+                + "Cela: " + cela.getNumero();
     }
 
     // método para calcular o tempo restante de pena

@@ -1,23 +1,23 @@
-package views;
+package view;
 
-import classes.AtualizavelListener;
-import classes.Cela;
-import classes.Prisioneiro;
+import listener.AtualizavelListener;
+import model.Cela;
+import model.Prisioneiro;
 import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
-public class CadastrarPrisioneiroInternalFrame extends javax.swing.JInternalFrame implements AtualizavelListener {
+public class PrisioneiroView extends javax.swing.JInternalFrame implements AtualizavelListener {
 
     DefaultTableModel modelTable, modelCelaTable;
     private Prisioneiro prisioneiro;
     private DateTimeFormatter formatter;
     private LocalDate dataNasci, dataPrisao;
-    private SistemaCarcerarioJanela main;
+    private SistemaCarcerarioView main;
 
-    public CadastrarPrisioneiroInternalFrame(SistemaCarcerarioJanela main) {
+    public PrisioneiroView(SistemaCarcerarioView main) {
         initComponents();
         this.main = main;
         main.addListener(this);
@@ -413,7 +413,7 @@ public class CadastrarPrisioneiroInternalFrame extends javax.swing.JInternalFram
     }
 
     private boolean checarCPF_NumDuplicado(String cpf, String num) {
-        if (prisioneiro != null && main.getListaGeral() != null) {
+        /*if (prisioneiro != null && main.getListaGeral() != null) {
             for (Object object : main.getListaGeral()) {
                 if (object instanceof Prisioneiro p) {
                     if (p.getCpf().equals(cpf)) {
@@ -428,7 +428,7 @@ public class CadastrarPrisioneiroInternalFrame extends javax.swing.JInternalFram
                     }
                 }
             }
-        }
+        }*/
         return true;
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables

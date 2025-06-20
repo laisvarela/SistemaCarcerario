@@ -1,34 +1,36 @@
-package views;
+package view;
 
-import classes.AtualizavelListener;
-import classes.Cela;
-import classes.Guarda;
-import classes.Prisioneiro;
-import classes.Turno;
+import listener.AtualizavelListener;
+import model.Cela;
+import model.Guarda;
+import model.Prisioneiro;
 import java.util.HashSet;
 import java.util.Set;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
-public class CadastrarCelaInternalFrame extends javax.swing.JInternalFrame implements AtualizavelListener {
+public class CelaView extends javax.swing.JInternalFrame implements AtualizavelListener {
     
     DefaultListModel<String> modelDiurno = new DefaultListModel<>();
     DefaultListModel<String> modelNoturno = new DefaultListModel<>();
     DefaultTableModel tableModel;
     private Set<Prisioneiro> prisioneiro = new HashSet<>();
     private Cela cela;
-    private SistemaCarcerarioJanela main;
+    private SistemaCarcerarioView main;
     
-    public CadastrarCelaInternalFrame(SistemaCarcerarioJanela main) {
+    public CelaView(SistemaCarcerarioView main) {
         initComponents();
         this.main = main;
+        main.addListener(this);
         this.celaCadastroPanel.setVisible(false);
         this.pack();
         tableModel = (DefaultTableModel) celaTabela_Table.getModel();
         celaGuardaDiurno_List.setModel(modelDiurno);
         celaGuardaNoturno_List.setModel(modelNoturno);
         celaEditarSalvar_Btn.setVisible(false);
+        celaAlterarGD_Btn.setVisible(false);
+        celaAlterarGN_Btn.setVisible(false);
     }
     
     @SuppressWarnings("unchecked")
@@ -52,6 +54,8 @@ public class CadastrarCelaInternalFrame extends javax.swing.JInternalFrame imple
         jSeparator2 = new javax.swing.JSeparator();
         celaVoltar_Btn = new javax.swing.JButton();
         celaEditarSalvar_Btn = new javax.swing.JButton();
+        celaAlterarGD_Btn = new javax.swing.JButton();
+        celaAlterarGN_Btn = new javax.swing.JButton();
         celaListaPanel = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
         jScrollPane4 = new javax.swing.JScrollPane();
@@ -112,6 +116,10 @@ public class CadastrarCelaInternalFrame extends javax.swing.JInternalFrame imple
             }
         });
 
+        celaAlterarGD_Btn.setText("Alterar Guarda Diurno");
+
+        celaAlterarGN_Btn.setText("Alterar Guarda Noturno");
+
         javax.swing.GroupLayout celaCadastroPanelLayout = new javax.swing.GroupLayout(celaCadastroPanel);
         celaCadastroPanel.setLayout(celaCadastroPanelLayout);
         celaCadastroPanelLayout.setHorizontalGroup(
@@ -132,25 +140,27 @@ public class CadastrarCelaInternalFrame extends javax.swing.JInternalFrame imple
                                 .addComponent(celaCapaciade_ComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(37, 37, 37))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, celaCadastroPanelLayout.createSequentialGroup()
-                                .addGap(46, 46, 46)
+                                .addGap(40, 40, 40)
                                 .addComponent(celaVoltar_Btn)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(celaLimpar_Btn)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(celaEditarSalvar_Btn)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(celaSalvar_Btn))))
+                    .addComponent(jSeparator2, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(celaCadastroPanelLayout.createSequentialGroup()
-                        .addGap(39, 39, 39)
+                        .addGap(14, 14, 14)
                         .addGroup(celaCadastroPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(celaAlterarGD_Btn)
                             .addComponent(jLabel4))
                         .addGap(33, 33, 33)
-                        .addGroup(celaCadastroPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel5))
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jSeparator2, javax.swing.GroupLayout.Alignment.TRAILING))
+                        .addGroup(celaCadastroPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jLabel5)
+                            .addComponent(celaAlterarGN_Btn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         celaCadastroPanelLayout.setVerticalGroup(
@@ -172,7 +182,11 @@ public class CadastrarCelaInternalFrame extends javax.swing.JInternalFrame imple
                 .addGroup(celaCadastroPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(celaCadastroPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(celaAlterarGD_Btn)
+                    .addComponent(celaAlterarGN_Btn))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 5, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(celaCadastroPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -259,8 +273,7 @@ public class CadastrarCelaInternalFrame extends javax.swing.JInternalFrame imple
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addComponent(celaListaPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(celaCadastroPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(celaCadastroPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -278,6 +291,7 @@ public class CadastrarCelaInternalFrame extends javax.swing.JInternalFrame imple
 
     // método para atualizar as jList de guarda diurno e guarda noturno
     public void atualizaListasGuardas() {
+        /*
         if (!main.getListaGeral().isEmpty()) {
             for (Object obj : main.getListaGeral()) {
                 if (obj instanceof Guarda guarda) {
@@ -288,11 +302,12 @@ public class CadastrarCelaInternalFrame extends javax.swing.JInternalFrame imple
                     }
                 }
             }
-        }
+        }*/
     }
 
     // método para atualizar tabela com os dados da cela
     private void atualizaTabela() {
+        /*
         tableModel.setRowCount(0); // Limpa a tabela
         if (!main.getListaGeral().isEmpty()) {
             for (Object obj : main.getListaGeral()) {
@@ -301,18 +316,19 @@ public class CadastrarCelaInternalFrame extends javax.swing.JInternalFrame imple
                         c.getGuardaDiurno(), c.getGuardaNoturno()});
                 }
             }
-        }
+        }*/
     }
 
     // método para atualizar a lista de prisioneiros
     private void atualizaListaPrisioneiros() {
+        /*
         if (!main.getListaGeral().isEmpty()) {
             for (Object obj : main.getListaGeral()) {
                 if (obj instanceof Prisioneiro p && !p.getCela().isEmpty()) {
                     prisioneiro.add(p);
                 }
             }
-        }
+        }*/
     }
     private void celaAdicionar_BtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_celaAdicionar_BtnActionPerformed
         celaListaPanel.setVisible(false);
@@ -332,7 +348,7 @@ public class CadastrarCelaInternalFrame extends javax.swing.JInternalFrame imple
                         guardaDiurno, guardaNoturno, prisioneiro);
 
                 // adiciona na lista geral
-                main.atualizarListaGeral(cela, 0, celaNumero_FomattedField.getText());
+               
                 
                 JOptionPane.showMessageDialog(null, "Cela cadastrada com sucesso!");
 
@@ -366,7 +382,7 @@ public class CadastrarCelaInternalFrame extends javax.swing.JInternalFrame imple
                         Integer.parseInt(celaCapaciade_ComboBox.getSelectedItem().toString()),
                          diurno, noturno, prisioneiro);
                 
-                main.atualizarListaGeral(cela, 1, String.valueOf(cela.getNumero()));
+                
                 
             } else {
                 JOptionPane.showMessageDialog(null, "Guarda diurno e noturno precisa ser selecionado.");
@@ -379,6 +395,7 @@ public class CadastrarCelaInternalFrame extends javax.swing.JInternalFrame imple
     }//GEN-LAST:event_celaEditarSalvar_BtnActionPerformed
 
     private void celaEditar_BtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_celaEditar_BtnActionPerformed
+       /*
         int linha = celaTabela_Table.getSelectedRow();
         if (linha >= 0) { // uma linha deve estar selecionada para habilitar a tela de editar
             int numero = Integer.parseInt(tableModel.getValueAt(linha, 1).toString());
@@ -394,14 +411,15 @@ public class CadastrarCelaInternalFrame extends javax.swing.JInternalFrame imple
             editarConfig();
         } else { // senão pede para selecionar um item
             JOptionPane.showMessageDialog(null, "Selecione um item.");
-        }
+        }*/
     }//GEN-LAST:event_celaEditar_BtnActionPerformed
 
     private void celaLimpar_BtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_celaLimpar_BtnActionPerformed
         limpar();
     }//GEN-LAST:event_celaLimpar_BtnActionPerformed
     
-    private void editarConfig() {
+    private void editarConfig() {  
+       /*
         if (!main.getListaGeral().isEmpty()) {
             for (Object obj : main.getListaGeral()) {
                 if (obj instanceof Cela c) {
@@ -413,7 +431,7 @@ public class CadastrarCelaInternalFrame extends javax.swing.JInternalFrame imple
                     }
                 }
             }
-        }
+        }*/
         celaListaPanel.setVisible(false);
         celaCadastroPanel.setVisible(true);
         celaSalvar_Btn.setVisible(false);
@@ -428,6 +446,8 @@ public class CadastrarCelaInternalFrame extends javax.swing.JInternalFrame imple
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton celaAdicionar_Btn;
+    private javax.swing.JButton celaAlterarGD_Btn;
+    private javax.swing.JButton celaAlterarGN_Btn;
     private javax.swing.JPanel celaCadastroPanel;
     private javax.swing.JComboBox<String> celaCapaciade_ComboBox;
     private javax.swing.JButton celaEditarSalvar_Btn;

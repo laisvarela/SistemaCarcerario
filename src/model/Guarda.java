@@ -1,15 +1,17 @@
-package classes;
+package model;
 
+import dao.GuardaDAO;
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 public class Guarda extends Pessoa implements Registro, Entidade {
 
     private String matricula;
-    private Turno turno;
+    private String turno;
     private LocalDate dataAdmissao;
     private boolean atribuido;
 
-    public Guarda(String matricula, Turno turno, LocalDate dataAdmissao, boolean atribuido, String nome, String cpf, LocalDate dataNascimento) {
+    public Guarda(String matricula, String turno, LocalDate dataAdmissao, boolean atribuido, String nome, String cpf, LocalDate dataNascimento) {
         super(nome, cpf, dataNascimento);
         this.matricula = matricula;
         this.turno = turno;
@@ -46,11 +48,11 @@ public class Guarda extends Pessoa implements Registro, Entidade {
         this.matricula = matricula;
     }
 
-    public Turno getTurno() {
+    public String getTurno() {
         return turno;
     }
 
-    public void setTurno(Turno turno) {
+    public void setTurno(String turno) {
         this.turno = turno;
     }
 
@@ -59,11 +61,35 @@ public class Guarda extends Pessoa implements Registro, Entidade {
     public String gerarRelatorio() {
         return "Guarda: " + getNome() + "\n"
                 + "Matrícula: " + matricula + "\n"
-                + "Turno: " + turno;
+                + "Turno: " + turno + "\n"
+                + "Atribuido: " + atribuido;
     }
 
     @Override
     public String getId() {
         return this.getMatricula();
+    }
+
+    public void cadastrarGuarda(Guarda guarda) {
+        GuardaDAO g = new GuardaDAO();
+        g.inserirGuarda(guarda);
+    }
+    
+    public ArrayList<Guarda> listaGuardas(){
+        return new GuardaDAO().listarGuardas();
+    }
+    
+    public String buscaGuardas(String matricula){
+        return new GuardaDAO().buscarGuarda(matricula);
+    }
+    
+    public void editarGuarda(Guarda guardaNovo){
+        GuardaDAO g = new GuardaDAO();
+        g.editarGuarda(guardaNovo);
+    }
+    
+    public void removerGuarda(String matricula){
+        GuardaDAO g = new GuardaDAO();
+        g.removerGuarda(matricula);
     }
 }
