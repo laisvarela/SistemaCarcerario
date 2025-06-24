@@ -1,6 +1,7 @@
 package view;
 
 import controller.GuardaController;
+import controller.PrisioneiroController;
 import listener.AtualizavelListener;
 import model.Guarda;
 import java.time.DateTimeException;
@@ -9,6 +10,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import model.Prisioneiro;
 
 public class GuardaView extends javax.swing.JInternalFrame implements AtualizavelListener {
 
@@ -20,6 +22,7 @@ public class GuardaView extends javax.swing.JInternalFrame implements Atualizave
     private String matricula;
     private final SistemaCarcerarioView main;
     private GuardaController guardaController;
+    private PrisioneiroController prisioneiroController;
 
     public GuardaView(SistemaCarcerarioView main) {
         initComponents();
@@ -29,6 +32,7 @@ public class GuardaView extends javax.swing.JInternalFrame implements Atualizave
         tableModel = (DefaultTableModel) guardaLista_Table.getModel();
         editarSalvar_Btn.setVisible(false);
         guardaController = new GuardaController();
+        prisioneiroController = new PrisioneiroController();
         atualizaTabela();
     }
 
@@ -56,7 +60,7 @@ public class GuardaView extends javax.swing.JInternalFrame implements Atualizave
         guarda_ComboBox = new javax.swing.JComboBox<>();
         editarSalvar_Btn = new javax.swing.JButton();
         guardaVoltar_Button = new javax.swing.JButton();
-        editarGuardaPanel = new javax.swing.JPanel();
+        listarGuardaPanel = new javax.swing.JPanel();
         jLabel8 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         guardaLista_Table = new javax.swing.JTable();
@@ -141,9 +145,8 @@ public class GuardaView extends javax.swing.JInternalFrame implements Atualizave
                     .addComponent(jSeparator2)
                     .addComponent(jSeparator1)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, cadastrarGuardaPanelLayout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(guardaVoltar_Button)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(guardaLimpar_Button)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(editarSalvar_Btn)
@@ -265,18 +268,18 @@ public class GuardaView extends javax.swing.JInternalFrame implements Atualizave
             }
         });
 
-        javax.swing.GroupLayout editarGuardaPanelLayout = new javax.swing.GroupLayout(editarGuardaPanel);
-        editarGuardaPanel.setLayout(editarGuardaPanelLayout);
-        editarGuardaPanelLayout.setHorizontalGroup(
-            editarGuardaPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(editarGuardaPanelLayout.createSequentialGroup()
+        javax.swing.GroupLayout listarGuardaPanelLayout = new javax.swing.GroupLayout(listarGuardaPanel);
+        listarGuardaPanel.setLayout(listarGuardaPanelLayout);
+        listarGuardaPanelLayout.setHorizontalGroup(
+            listarGuardaPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(listarGuardaPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(editarGuardaPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(editarGuardaPanelLayout.createSequentialGroup()
+                .addGroup(listarGuardaPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(listarGuardaPanelLayout.createSequentialGroup()
                         .addComponent(jLabel8)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 535, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, editarGuardaPanelLayout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, listarGuardaPanelLayout.createSequentialGroup()
                         .addGap(6, 6, 6)
                         .addComponent(guardaBuscar_TextField, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -289,15 +292,15 @@ public class GuardaView extends javax.swing.JInternalFrame implements Atualizave
                         .addComponent(guardaRemover_Btn)))
                 .addContainerGap())
         );
-        editarGuardaPanelLayout.setVerticalGroup(
-            editarGuardaPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(editarGuardaPanelLayout.createSequentialGroup()
+        listarGuardaPanelLayout.setVerticalGroup(
+            listarGuardaPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(listarGuardaPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel8)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(editarGuardaPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(listarGuardaPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(guardaAdicionar_Btn)
                     .addComponent(guardaEditar_Btn)
                     .addComponent(guardaRemover_Btn)
@@ -306,15 +309,13 @@ public class GuardaView extends javax.swing.JInternalFrame implements Atualizave
                 .addContainerGap())
         );
 
-        getContentPane().add(editarGuardaPanel, java.awt.BorderLayout.PAGE_START);
+        getContentPane().add(listarGuardaPanel, java.awt.BorderLayout.PAGE_START);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
     @Override
-    public void dadosAtualizados(String tipo) {
-        if (tipo.equals("Guarda")) {
-            atualizaTabela();
-        }
+    public void dadosAtualizados() {
+        atualizaTabela();
     }
 
     private void atualizaTabela() {
@@ -327,7 +328,6 @@ public class GuardaView extends javax.swing.JInternalFrame implements Atualizave
                 guarda.getTurno()
             });
         }
-
     }
     private void guardaAdicionar_BtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_guardaAdicionar_BtnActionPerformed
         cadastrarConfig();
@@ -352,9 +352,7 @@ public class GuardaView extends javax.swing.JInternalFrame implements Atualizave
                             dataNasci);
 
                     guardaController.cadastrarGuarda(guarda);
-
-                    // adiciona na tabela
-                    tableModel.addRow(new Object[]{guardaNome_TextField.getText(), matricula, guarda_ComboBox.getSelectedItem().toString()});
+                    main.notificarAtualizacao();
 
                     //cela.atualizarListasGuardas(listaGuardas);
                     JOptionPane.showMessageDialog(null, "Guarda cadastrado com sucesso!");
@@ -363,7 +361,7 @@ public class GuardaView extends javax.swing.JInternalFrame implements Atualizave
                     limpar();
 
                     // configuração visual
-                    editarGuardaPanel.setVisible(true);
+                    listarGuardaPanel.setVisible(true);
                     cadastrarGuardaPanel.setVisible(false);
                     guardaEditar_Btn.setVisible(true);
                     guardaRemover_Btn.setVisible(true);
@@ -394,6 +392,8 @@ public class GuardaView extends javax.swing.JInternalFrame implements Atualizave
                     guardaDataNasci_FormattedTextField.setText(dataFormatada);
                 }
             }
+            listarGuardaPanel.setVisible(false);
+            cadastrarGuardaPanel.setVisible(true);
             editarConfig();
         } else { // senão pede para selecionar um item
             JOptionPane.showMessageDialog(null, "Selecione um item.");
@@ -407,10 +407,10 @@ public class GuardaView extends javax.swing.JInternalFrame implements Atualizave
                     guardaNome_TextField.getText(), guardaCPF_FormattedTextField.getText().replaceAll("[.-]", ""), dataNasci);
 
             guardaController.editarGuarda(guarda);
-            atualizaTabela();
+            main.notificarAtualizacao();
             //configuração visual
             cadastrarGuardaPanel.setVisible(false);
-            editarGuardaPanel.setVisible(true);
+            listarGuardaPanel.setVisible(true);
             editarSalvar_Btn.setVisible(false);
             guardaSalvar_Button.setVisible(true);
             this.pack();
@@ -426,14 +426,14 @@ public class GuardaView extends javax.swing.JInternalFrame implements Atualizave
         if (linha >= 0) {
             matricula = (String) tableModel.getValueAt(linha, 1);
             guardaController.remover(matricula);
-            atualizaTabela();
+            main.notificarAtualizacao();
         } else {
             JOptionPane.showMessageDialog(null, "Selecione um item.");
         }
     }//GEN-LAST:event_guardaRemover_BtnActionPerformed
 
     private void guardaVoltar_ButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_guardaVoltar_ButtonActionPerformed
-        editarGuardaPanel.setVisible(true);
+        listarGuardaPanel.setVisible(true);
         cadastrarGuardaPanel.setVisible(false);
         this.pack();
     }//GEN-LAST:event_guardaVoltar_ButtonActionPerformed
@@ -477,7 +477,7 @@ public class GuardaView extends javax.swing.JInternalFrame implements Atualizave
     }
 
     private void editarConfig() {
-        editarGuardaPanel.setVisible(false);
+        listarGuardaPanel.setVisible(false);
         cadastrarGuardaPanel.setVisible(true);
         guardaDataNasci_FormattedTextField.setEnabled(false);
         guardaCPF_FormattedTextField.setEnabled(false);
@@ -490,7 +490,7 @@ public class GuardaView extends javax.swing.JInternalFrame implements Atualizave
 
     private void cadastrarConfig() {
         limpar();
-        editarGuardaPanel.setVisible(false);
+        listarGuardaPanel.setVisible(false);
         cadastrarGuardaPanel.setVisible(true);
         guardaDataNasci_FormattedTextField.setEnabled(true);
         guardaCPF_FormattedTextField.setEnabled(true);
@@ -500,29 +500,32 @@ public class GuardaView extends javax.swing.JInternalFrame implements Atualizave
         this.pack();
     }
 
+    // método para checar se já existe uma pessoa com este CPF cadastrado no sistema
     private boolean checarCPF_MatriculaDuplicado(String cpf, String matricula) {
-        /* if (guarda != null && main.getListaGeral() != null) {
-            for (Object object : main.getListaGeral()) {
-                if (object instanceof Guarda guarda1) {
-                    if (guarda1.getCpf().equals(cpf)) {
-                        JOptionPane.showMessageDialog(null, "CPF já cadastrado!");
-                        guardaCPF_FormattedTextField.setValue(null);
-                        return false;
-                    }
-                    if (guarda1.getMatricula().equals(matricula)) {
-                        JOptionPane.showMessageDialog(null, "Matrícula já cadastrada!");
-                        guardaMatricula_TextField.setText(null);
-                        return false;
-                    }
-                }
+        ArrayList<Prisioneiro> prisioneiros = prisioneiroController.listarPrisioneiros();
+        ArrayList<Guarda> guardas = guardaController.listarGuardas();
+        for (Prisioneiro p : prisioneiros) {
+            if (p.getCpf().equals(cpf.replaceAll("[-.]", ""))) {
+                JOptionPane.showMessageDialog(null, "CPF já cadastrado no sistema.");
+                return false;
             }
-        }*/
+
+            if (String.valueOf(p.getNumRegistro()).equals(matricula)) {
+                JOptionPane.showMessageDialog(null, "Matrícula já cadastrada no sistema.");
+                return false;
+            }
+        }
+        for (Guarda g : guardas) {
+            if (g.getCpf().equals(cpf.replaceAll("[-.]", ""))) {
+                JOptionPane.showMessageDialog(null, "CPF já cadastrado no sistema.");
+                return false;
+            }
+        }
         return true;
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel cadastrarGuardaPanel;
-    private javax.swing.JPanel editarGuardaPanel;
     private javax.swing.JButton editarSalvar_Btn;
     private javax.swing.JButton guardaAdicionar_Btn;
     private javax.swing.JButton guardaBuscar_Btn;
@@ -549,6 +552,7 @@ public class GuardaView extends javax.swing.JInternalFrame implements Atualizave
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
+    private javax.swing.JPanel listarGuardaPanel;
     // End of variables declaration//GEN-END:variables
 
 }

@@ -1,17 +1,9 @@
 package view;
 
+import controller.CelaController;
 import controller.GuardaController;
-import dao.CelaDAO;
-import dao.GuardaDAO;
-import dao.PrisioneiroDAO;
-import listener.AtualizavelListener;
-import model.Entidade;
 import java.util.ArrayList;
-import java.util.Iterator;
-import javax.swing.JOptionPane;
-import model.Cela;
-import model.Guarda;
-import model.Prisioneiro;
+import listener.AtualizavelListener;
 
 public class SistemaCarcerarioView extends javax.swing.JFrame {
 
@@ -19,6 +11,8 @@ public class SistemaCarcerarioView extends javax.swing.JFrame {
     private GuardaView telaCadastroGuarda;
     private CelaView telaCadastroCela;
     private PrisioneiroView telaCadastroPrisioneiro;
+    private GuardaController guardaController;
+    private CelaController celaController;
 
     // cria uma lista onde ficaram os listeners
     private ArrayList<AtualizavelListener> listeners = new ArrayList<>();
@@ -28,9 +22,8 @@ public class SistemaCarcerarioView extends javax.swing.JFrame {
         this.pack();
 
         // inicializando 
-        telaCadastroGuarda = new GuardaView(this);
-        telaCadastroCela = new CelaView(this);
-        telaCadastroPrisioneiro = new PrisioneiroView(this);
+        guardaController = new GuardaController();
+        celaController = new CelaController();
     }
 
     @SuppressWarnings("unchecked")
@@ -121,10 +114,9 @@ public class SistemaCarcerarioView extends javax.swing.JFrame {
         listeners.add(listener);
     }
 
-    // notificar todas as telas adicionadas
-    private void notificarAtualizacao(String tipo) {
+    public void notificarAtualizacao() {
         for (AtualizavelListener listener : listeners) {
-            listener.dadosAtualizados(tipo);
+            listener.dadosAtualizados();
         }
     }
 
@@ -133,6 +125,7 @@ public class SistemaCarcerarioView extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem6ActionPerformed
 
     private void guarda_MenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_guarda_MenuItemActionPerformed
+        telaCadastroGuarda = new GuardaView(this);
         this.jDesktopPane.removeAll(); // remove todas as telas que estão atualmente ocupando o jDesktopPane
         this.jDesktopPane.add(telaCadastroGuarda); //adiciona no jDesktopPane vazio
         telaCadastroGuarda.setVisible(true); // torna o painel visível 
@@ -140,6 +133,7 @@ public class SistemaCarcerarioView extends javax.swing.JFrame {
     }//GEN-LAST:event_guarda_MenuItemActionPerformed
 
     private void prisioneiro_MenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_prisioneiro_MenuItemActionPerformed
+        telaCadastroPrisioneiro = new PrisioneiroView(this);
         this.jDesktopPane.removeAll();
         this.jDesktopPane.add(telaCadastroPrisioneiro);
         telaCadastroPrisioneiro.setVisible(true);
@@ -147,6 +141,7 @@ public class SistemaCarcerarioView extends javax.swing.JFrame {
     }//GEN-LAST:event_prisioneiro_MenuItemActionPerformed
 
     private void cela_MenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cela_MenuItemActionPerformed
+        telaCadastroCela = new CelaView(this);
         this.jDesktopPane.removeAll();
         this.jDesktopPane.add(telaCadastroCela);
         telaCadastroCela.setVisible(true);
@@ -196,4 +191,5 @@ public class SistemaCarcerarioView extends javax.swing.JFrame {
     private javax.swing.JMenuItem prisioneiro_MenuItem;
     private javax.swing.JMenu sobre_Menu;
     // End of variables declaration//GEN-END:variables
+
 }

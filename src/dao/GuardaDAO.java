@@ -16,9 +16,9 @@ public class GuardaDAO {
     ResultSet rs = null;
 
     public void inserirGuarda(Guarda guarda) {
-        String sql = "INSERT INTO GUARDA(nome, cpf, dataNascimento, "
-                + "matricula, turno, dataAdmissao, atribuido) "
-                + "VALUES(?,?,?,?,?,?,?)";
+        String sql = "INSERT INTO guarda(nome, cpf, dataNascimento, "
+                + "matricula, turno, atribuido) "
+                + "VALUES(?,?,?,?,?,?)";
 
         try {
             connection = ConexaoDAO.conectorBD();
@@ -33,7 +33,7 @@ public class GuardaDAO {
             stmt.setDate(3, dataNascSql);
             stmt.setString(4, guarda.getMatricula());
             stmt.setString(5, String.valueOf(guarda.getTurno()));
-            stmt.setBoolean(7, guarda.isAtribuido());
+            stmt.setBoolean(6, guarda.isAtribuido());
 
             //adicionar no bando de dados
             stmt.executeUpdate();
@@ -132,7 +132,7 @@ public class GuardaDAO {
     }
 
     public void editarGuarda(Guarda guardaNovo) {
-        String sql = "UPDATE guarda SET nome = ?, turno = ? WHERE matricula = ?";
+        String sql = "UPDATE guarda SET nome = ?,  turno = ? WHERE matricula = ?";
 
         try {
             connection = new ConexaoDAO().conectorBD();

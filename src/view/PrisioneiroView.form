@@ -40,7 +40,7 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Component id="editarPrisioneiroPanel" alignment="0" max="32767" attributes="0"/>
+          <Component id="listaPrisioneiroPanel" alignment="0" max="32767" attributes="0"/>
           <Group type="102" alignment="1" attributes="0">
               <EmptySpace max="32767" attributes="0"/>
               <Component id="cadastrarPrisioneiroPanel" min="-2" max="-2" attributes="0"/>
@@ -51,7 +51,7 @@
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="1" attributes="0">
-              <Component id="editarPrisioneiroPanel" min="-2" max="-2" attributes="0"/>
+              <Component id="listaPrisioneiroPanel" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Component id="cadastrarPrisioneiroPanel" min="-2" max="-2" attributes="0"/>
               <EmptySpace pref="67" max="32767" attributes="0"/>
@@ -60,7 +60,7 @@
     </DimensionLayout>
   </Layout>
   <SubComponents>
-    <Container class="javax.swing.JPanel" name="editarPrisioneiroPanel">
+    <Container class="javax.swing.JPanel" name="listaPrisioneiroPanel">
 
       <Layout>
         <DimensionLayout dim="0">
@@ -74,12 +74,15 @@
                       </Group>
                       <Component id="jScrollPane2" pref="670" max="32767" attributes="0"/>
                       <Group type="102" alignment="1" attributes="0">
-                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                          <Component id="prisioneiroBuscar_TextField" min="-2" pref="117" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="prisioneiroBuscar_Btn" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="32767" attributes="0"/>
                           <Component id="prisioneiroAdicionar_Btn" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="celaEditar_Btn" min="-2" max="-2" attributes="0"/>
+                          <Component id="prisioneiroEditar_Btn" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="celaRemover_Btn" min="-2" max="-2" attributes="0"/>
+                          <Component id="prisioneiroRemover_Btn" min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
@@ -96,8 +99,10 @@
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="prisioneiroAdicionar_Btn" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="celaEditar_Btn" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="celaRemover_Btn" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="prisioneiroEditar_Btn" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="prisioneiroRemover_Btn" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="prisioneiroBuscar_TextField" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="prisioneiroBuscar_Btn" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="32767" attributes="0"/>
               </Group>
@@ -142,15 +147,31 @@
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="prisioneiroAdicionar_BtnActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JButton" name="celaEditar_Btn">
+        <Component class="javax.swing.JButton" name="prisioneiroEditar_Btn">
           <Properties>
             <Property name="text" type="java.lang.String" value="Editar"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="prisioneiroEditar_BtnActionPerformed"/>
+          </Events>
         </Component>
-        <Component class="javax.swing.JButton" name="celaRemover_Btn">
+        <Component class="javax.swing.JButton" name="prisioneiroRemover_Btn">
           <Properties>
             <Property name="text" type="java.lang.String" value="Remover"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="prisioneiroRemover_BtnActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JTextField" name="prisioneiroBuscar_TextField">
+        </Component>
+        <Component class="javax.swing.JButton" name="prisioneiroBuscar_Btn">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Buscar"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="prisioneiroBuscar_BtnActionPerformed"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>
@@ -198,13 +219,13 @@
                                           <EmptySpace max="-2" attributes="0"/>
                                           <Group type="103" groupAlignment="0" attributes="0">
                                               <Component id="jScrollPane1" min="-2" pref="311" max="-2" attributes="0"/>
-                                              <Group type="102" attributes="0">
+                                              <Group type="102" alignment="0" attributes="0">
                                                   <Component id="prisioneiroNumRegistro_TextField" min="-2" pref="130" max="-2" attributes="0"/>
                                                   <EmptySpace max="-2" attributes="0"/>
                                                   <Component id="jLabel8" min="-2" pref="32" max="-2" attributes="0"/>
                                                   <EmptySpace max="-2" attributes="0"/>
-                                                  <Component id="prisioneiroPenaFormattedTextField" min="-2" pref="45" max="-2" attributes="0"/>
-                                                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                                  <Component id="prisioneiroPena_TextField" min="-2" pref="46" max="-2" attributes="0"/>
+                                                  <EmptySpace min="-2" pref="21" max="-2" attributes="0"/>
                                                   <Component id="jLabel6" min="-2" max="-2" attributes="0"/>
                                                   <EmptySpace max="-2" attributes="0"/>
                                                   <Component id="prisioneiroDataPrisao_FormattedTextField" min="-2" pref="96" max="-2" attributes="0"/>
@@ -212,7 +233,7 @@
                                           </Group>
                                       </Group>
                                   </Group>
-                                  <EmptySpace min="0" pref="5" max="32767" attributes="0"/>
+                                  <EmptySpace min="0" pref="17" max="32767" attributes="0"/>
                               </Group>
                           </Group>
                       </Group>
@@ -223,6 +244,8 @@
                                   <Component id="prisioneiroVoltar_Button" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace max="32767" attributes="0"/>
                                   <Component id="prisioneiroLimpar_Button" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="prisioneiroEditarSalvar_Btn" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Component id="prisioneiroSalvar_Button" min="-2" max="-2" attributes="0"/>
                               </Group>
@@ -259,10 +282,10 @@
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="jLabel5" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="jLabel8" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="prisioneiroPenaFormattedTextField" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="jLabel6" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="prisioneiroDataPrisao_FormattedTextField" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="prisioneiroNumRegistro_TextField" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="prisioneiroPena_TextField" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Component id="jLabel9" min="-2" max="-2" attributes="0"/>
@@ -275,6 +298,7 @@
                       <Component id="prisioneiroSalvar_Button" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="prisioneiroLimpar_Button" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="prisioneiroVoltar_Button" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="prisioneiroEditarSalvar_Btn" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="32767" attributes="0"/>
               </Group>
@@ -356,13 +380,6 @@
             <Property name="text" type="java.lang.String" value="Pena:"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JFormattedTextField" name="prisioneiroPenaFormattedTextField">
-          <Properties>
-            <Property name="formatterFactory" type="javax.swing.JFormattedTextField$AbstractFormatterFactory" editor="org.netbeans.modules.form.editors.AbstractFormatterFactoryEditor" preCode="try {" postCode="} catch (java.text.ParseException ex) {&#xa;ex.printStackTrace();&#xa;}">
-              <Format format="###" subtype="-1" type="5"/>
-            </Property>
-          </Properties>
-        </Component>
         <Component class="javax.swing.JLabel" name="jLabel6">
           <Properties>
             <Property name="text" type="java.lang.String" value="Data da Pris&#xe3;o:"/>
@@ -408,6 +425,16 @@
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="prisioneiroVoltar_ButtonActionPerformed"/>
           </Events>
+        </Component>
+        <Component class="javax.swing.JButton" name="prisioneiroEditarSalvar_Btn">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Salvar"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="prisioneiroEditarSalvar_BtnActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JTextField" name="prisioneiroPena_TextField">
         </Component>
       </SubComponents>
     </Container>

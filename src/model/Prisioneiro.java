@@ -1,20 +1,22 @@
 package model;
 
+import dao.PrisioneiroDAO;
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 public class Prisioneiro extends Pessoa implements Registro, Entidade {
 
-    private String numRegistro;
+    private int numRegistro;
     private LocalDate dataPrisao;
     private int pena;
-    private Cela cela;
+    private int num_cela;
 
-    public Prisioneiro(String numRegistro, LocalDate dataPrisao, int pena, Cela cela, String nome, String cpf, LocalDate dataNascimento) {
+    public Prisioneiro(int numRegistro, LocalDate dataPrisao, int pena, Cela cela, String nome, String cpf, LocalDate dataNascimento) {
         super(nome, cpf, dataNascimento);
         this.numRegistro = numRegistro;
         this.dataPrisao = dataPrisao;
         this.pena = pena;
-        this.cela = cela;
+        this.num_cela = cela.getNumero();
     }
 
     public Prisioneiro(String nome, String cpf, LocalDate dataNascimento) {
@@ -22,19 +24,19 @@ public class Prisioneiro extends Pessoa implements Registro, Entidade {
     }
 
     // getters e setters
-    public String getCela() {
-        return String.valueOf(cela.getNumero());
+    public Integer getCela() {
+        return num_cela;
     }
 
     public void setCela(Cela cela) {
-        this.cela = cela;
+        this.num_cela = cela.getNumero();
     }
 
-    public String getNumRegistro() {
+    public int getNumRegistro() {
         return numRegistro;
     }
 
-    public void setNumRegistro(String numRegistro) {
+    public void setNumRegistro(int numRegistro) {
         this.numRegistro = numRegistro;
     }
 
@@ -61,7 +63,7 @@ public class Prisioneiro extends Pessoa implements Registro, Entidade {
                 + "Registro: " + numRegistro + "\n"
                 + "Data de Prisão: " + dataPrisao + "\n"
                 + "Pena: " + pena + " anos\n"
-                + "Cela: " + cela.getNumero();
+                + "Cela: " + num_cela;
     }
 
     // método para calcular o tempo restante de pena
@@ -73,6 +75,30 @@ public class Prisioneiro extends Pessoa implements Registro, Entidade {
 
     @Override
     public String getId() {
-        return this.getNumRegistro();
+        return String.valueOf(this.getNumRegistro());
+    }
+
+    public void cadastrarPrisioneiro(Prisioneiro prisioneiro) {
+        new PrisioneiroDAO().inserirPrisioneiro(prisioneiro);
+    }
+
+    public ArrayList<Prisioneiro> listaPrisioneiros() {
+        return new PrisioneiroDAO().listarPrisioneiros();
+    }
+
+    public String buscaPrisioneiros(String matricula) {
+        return new PrisioneiroDAO().buscarPrisioneiro(matricula);
+    }
+
+    public void editarPrisioneiro(Prisioneiro prisioneiroNovo) {
+        new PrisioneiroDAO().editarPrisioneiro(prisioneiroNovo);
+    }
+
+    public void removerPrisioneiro(int matricula) {
+        new PrisioneiroDAO().removerPrisioneiro(numRegistro);
+    }
+    
+    public boolean existePrisioneiroNaCela(int numeroCela){
+        return new PrisioneiroDAO().existePrisioneiroNaCela(numeroCela);
     }
 }

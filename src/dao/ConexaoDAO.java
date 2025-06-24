@@ -33,7 +33,7 @@ public class ConexaoDAO {
                         turno VARCHAR(10) NOT NULL,
                         atribuido BOOLEAN NOT NULL DEFAULT false
                     )""");
-
+            
             stmt.executeUpdate("""
                     CREATE TABLE IF NOT EXISTS cela (
                         idcela INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
@@ -41,9 +41,11 @@ public class ConexaoDAO {
                         capacidade INT NOT NULL,
                         guarda_diurno VARCHAR(20), 
                         guarda_noturno VARCHAR(20),
+                        lotado BOOLEAN NOT NULL DEFAULT false,
                         FOREIGN KEY (guarda_diurno) REFERENCES guarda(matricula),
                         FOREIGN KEY (guarda_noturno) REFERENCES guarda(matricula)
                     )""");
+
             stmt.executeUpdate("""
                     CREATE TABLE IF NOT EXISTS prisioneiro (
                         idprisioneiro INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
@@ -56,7 +58,7 @@ public class ConexaoDAO {
                         num_cela INT NOT NULL,
                         FOREIGN KEY (num_cela) REFERENCES cela(numero)
                     )""");
-            
+
             stmt.executeUpdate("""
                     CREATE TABLE IF NOT EXISTS cela_prisioneiro (
                         numero_cela INT NOT NULL,          
@@ -65,7 +67,7 @@ public class ConexaoDAO {
                         FOREIGN KEY (numero_cela) REFERENCES cela(numero) ON UPDATE CASCADE,
                         FOREIGN KEY (numero_registro) REFERENCES prisioneiro(numRegistro) ON UPDATE CASCADE
                     )""");
-           
+
             return conexao;
         } catch (ClassNotFoundException | SQLException e) {
             System.out.println("Erro em ConexaoDAO.\nErro: " + e);
