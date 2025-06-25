@@ -34,6 +34,7 @@ public class GuardaView extends javax.swing.JInternalFrame implements Atualizave
         guardaController = new GuardaController();
         prisioneiroController = new PrisioneiroController();
         atualizaTabela();
+        this.pack();
     }
 
     @SuppressWarnings("unchecked")
@@ -75,31 +76,45 @@ public class GuardaView extends javax.swing.JInternalFrame implements Atualizave
         setMaximizable(true);
         setTitle("Cadastro de Guarda");
 
+        cadastrarGuardaPanel.setBackground(new java.awt.Color(255, 255, 255));
         cadastrarGuardaPanel.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Yu Gothic UI", 1, 14)); // NOI18N
         jLabel1.setText("Dados Pessoais");
 
+        jLabel2.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
         jLabel2.setText("Nome:");
 
+        jLabel3.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
         jLabel3.setText("Data de Nascimento:");
 
+        jLabel4.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
         jLabel4.setText("CPF:");
 
+        guardaNome_TextField.setBackground(new java.awt.Color(255, 252, 252));
+        guardaNome_TextField.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+
+        guardaDataNasci_FormattedTextField.setBackground(new java.awt.Color(255, 252, 252));
         try {
             guardaDataNasci_FormattedTextField.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
+        guardaDataNasci_FormattedTextField.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
 
+        guardaCPF_FormattedTextField.setBackground(new java.awt.Color(255, 252, 252));
         try {
             guardaCPF_FormattedTextField.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("###.###.###-##")));
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
+        guardaCPF_FormattedTextField.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
 
+        jLabel5.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
         jLabel5.setText("Matrícula:");
 
+        guardaSalvar_Button.setBackground(new java.awt.Color(255, 252, 252));
+        guardaSalvar_Button.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
         guardaSalvar_Button.setText("Salvar");
         guardaSalvar_Button.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -107,6 +122,8 @@ public class GuardaView extends javax.swing.JInternalFrame implements Atualizave
             }
         });
 
+        guardaLimpar_Button.setBackground(new java.awt.Color(255, 252, 252));
+        guardaLimpar_Button.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
         guardaLimpar_Button.setText("Limpar");
         guardaLimpar_Button.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -114,13 +131,20 @@ public class GuardaView extends javax.swing.JInternalFrame implements Atualizave
             }
         });
 
-        jLabel7.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel7.setFont(new java.awt.Font("Yu Gothic UI", 1, 14)); // NOI18N
         jLabel7.setText("Informações");
 
+        guardaMatricula_TextField.setBackground(new java.awt.Color(255, 252, 252));
+        guardaMatricula_TextField.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+
+        jLabel9.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
         jLabel9.setText("Turno:");
 
+        guarda_ComboBox.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
         guarda_ComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Diurno", "Noturno" }));
 
+        editarSalvar_Btn.setBackground(new java.awt.Color(255, 252, 252));
+        editarSalvar_Btn.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
         editarSalvar_Btn.setText("Salvar");
         editarSalvar_Btn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -128,6 +152,8 @@ public class GuardaView extends javax.swing.JInternalFrame implements Atualizave
             }
         });
 
+        guardaVoltar_Button.setBackground(new java.awt.Color(255, 252, 252));
+        guardaVoltar_Button.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
         guardaVoltar_Button.setText("Voltar");
         guardaVoltar_Button.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -164,20 +190,20 @@ public class GuardaView extends javax.swing.JInternalFrame implements Atualizave
                                 .addComponent(guarda_ComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(jLabel1)
                             .addComponent(jLabel7)
-                            .addGroup(cadastrarGuardaPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addGroup(cadastrarGuardaPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                 .addGroup(cadastrarGuardaPanelLayout.createSequentialGroup()
                                     .addComponent(jLabel2)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                    .addComponent(guardaNome_TextField))
+                                    .addComponent(guardaNome_TextField, javax.swing.GroupLayout.PREFERRED_SIZE, 330, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGroup(javax.swing.GroupLayout.Alignment.LEADING, cadastrarGuardaPanelLayout.createSequentialGroup()
                                     .addComponent(jLabel3)
                                     .addGap(7, 7, 7)
                                     .addComponent(guardaDataNasci_FormattedTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                     .addComponent(jLabel4)
-                                    .addGap(18, 18, 18)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                     .addComponent(guardaCPF_FormattedTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addGap(0, 8, Short.MAX_VALUE)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         cadastrarGuardaPanelLayout.setVerticalGroup(
@@ -218,9 +244,13 @@ public class GuardaView extends javax.swing.JInternalFrame implements Atualizave
 
         getContentPane().add(cadastrarGuardaPanel, java.awt.BorderLayout.LINE_START);
 
-        jLabel8.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        listarGuardaPanel.setBackground(new java.awt.Color(255, 255, 255));
+
+        jLabel8.setFont(new java.awt.Font("Yu Gothic UI", 1, 14)); // NOI18N
         jLabel8.setText("Lista de Guardas");
 
+        guardaLista_Table.setBackground(new java.awt.Color(255, 252, 252));
+        guardaLista_Table.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
         guardaLista_Table.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -238,8 +268,13 @@ public class GuardaView extends javax.swing.JInternalFrame implements Atualizave
             }
         });
         guardaLista_Table.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        guardaLista_Table.setGridColor(new java.awt.Color(255, 252, 252));
+        guardaLista_Table.setSelectionBackground(new java.awt.Color(0, 153, 153));
+        guardaLista_Table.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jScrollPane1.setViewportView(guardaLista_Table);
 
+        guardaAdicionar_Btn.setBackground(new java.awt.Color(255, 252, 252));
+        guardaAdicionar_Btn.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
         guardaAdicionar_Btn.setText("Adicionar");
         guardaAdicionar_Btn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -247,6 +282,8 @@ public class GuardaView extends javax.swing.JInternalFrame implements Atualizave
             }
         });
 
+        guardaEditar_Btn.setBackground(new java.awt.Color(255, 252, 252));
+        guardaEditar_Btn.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
         guardaEditar_Btn.setText("Editar");
         guardaEditar_Btn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -254,6 +291,8 @@ public class GuardaView extends javax.swing.JInternalFrame implements Atualizave
             }
         });
 
+        guardaRemover_Btn.setBackground(new java.awt.Color(255, 252, 252));
+        guardaRemover_Btn.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
         guardaRemover_Btn.setText("Remover");
         guardaRemover_Btn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -261,6 +300,10 @@ public class GuardaView extends javax.swing.JInternalFrame implements Atualizave
             }
         });
 
+        guardaBuscar_TextField.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+
+        guardaBuscar_Btn.setBackground(new java.awt.Color(255, 252, 252));
+        guardaBuscar_Btn.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
         guardaBuscar_Btn.setText("Buscar");
         guardaBuscar_Btn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

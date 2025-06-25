@@ -39,6 +39,7 @@ public class PrisioneiroView extends javax.swing.JInternalFrame implements Atual
         formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy"); // padrão de formatação para data
         atualizaTabela();
         botoesConfig();
+        this.pack();
     }
 
     @SuppressWarnings("unchecked")
@@ -81,15 +82,20 @@ public class PrisioneiroView extends javax.swing.JInternalFrame implements Atual
         prisioneiroEditarSalvar_Btn = new javax.swing.JButton();
         prisioneiroPena_TextField = new javax.swing.JTextField();
 
+        setBackground(new java.awt.Color(255, 255, 255));
         setClosable(true);
         setIconifiable(true);
         setMaximizable(true);
         setResizable(true);
         setTitle("Cadastro de Prisioneiro");
 
-        jLabel10.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        listaPrisioneiroPanel.setBackground(new java.awt.Color(255, 255, 255));
+
+        jLabel10.setFont(new java.awt.Font("Yu Gothic UI", 1, 14)); // NOI18N
         jLabel10.setText("Lista de Prisioneiros");
 
+        prisioneiroLista_Table.setBackground(new java.awt.Color(255, 252, 252));
+        prisioneiroLista_Table.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
         prisioneiroLista_Table.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -106,8 +112,12 @@ public class PrisioneiroView extends javax.swing.JInternalFrame implements Atual
                 return canEdit [columnIndex];
             }
         });
+        prisioneiroLista_Table.setGridColor(new java.awt.Color(255, 252, 252));
+        prisioneiroLista_Table.setSelectionBackground(new java.awt.Color(0, 153, 153));
         jScrollPane2.setViewportView(prisioneiroLista_Table);
 
+        prisioneiroAdicionar_Btn.setBackground(new java.awt.Color(255, 252, 252));
+        prisioneiroAdicionar_Btn.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
         prisioneiroAdicionar_Btn.setText("Adicionar");
         prisioneiroAdicionar_Btn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -115,6 +125,8 @@ public class PrisioneiroView extends javax.swing.JInternalFrame implements Atual
             }
         });
 
+        prisioneiroEditar_Btn.setBackground(new java.awt.Color(255, 252, 252));
+        prisioneiroEditar_Btn.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
         prisioneiroEditar_Btn.setText("Editar");
         prisioneiroEditar_Btn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -122,6 +134,8 @@ public class PrisioneiroView extends javax.swing.JInternalFrame implements Atual
             }
         });
 
+        prisioneiroRemover_Btn.setBackground(new java.awt.Color(255, 252, 252));
+        prisioneiroRemover_Btn.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
         prisioneiroRemover_Btn.setText("Remover");
         prisioneiroRemover_Btn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -129,6 +143,9 @@ public class PrisioneiroView extends javax.swing.JInternalFrame implements Atual
             }
         });
 
+        prisioneiroBuscar_Btn.setBackground(new java.awt.Color(255, 252, 252));
+        prisioneiroBuscar_Btn.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
+        prisioneiroBuscar_Btn.setForeground(new java.awt.Color(51, 51, 51));
         prisioneiroBuscar_Btn.setText("Buscar");
         prisioneiroBuscar_Btn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -168,39 +185,53 @@ public class PrisioneiroView extends javax.swing.JInternalFrame implements Atual
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(listaPrisioneiroPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(prisioneiroAdicionar_Btn)
                     .addComponent(prisioneiroEditar_Btn)
                     .addComponent(prisioneiroRemover_Btn)
                     .addComponent(prisioneiroBuscar_TextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(prisioneiroBuscar_Btn))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(prisioneiroBuscar_Btn)
+                    .addComponent(prisioneiroAdicionar_Btn))
+                .addContainerGap())
         );
 
-        cadastrarPrisioneiroPanel.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        cadastrarPrisioneiroPanel.setBackground(new java.awt.Color(255, 255, 255));
+        cadastrarPrisioneiroPanel.setBorder(javax.swing.BorderFactory.createEtchedBorder(new java.awt.Color(0, 0, 0), null));
 
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Yu Gothic UI", 1, 14)); // NOI18N
         jLabel1.setText("Dados Pessoais");
 
+        jLabel2.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
         jLabel2.setText("Nome:");
 
+        jLabel3.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
         jLabel3.setText("Data de Nascimento:");
 
+        jLabel4.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
         jLabel4.setText("CPF:");
 
+        prisioneiroNome_TextField.setBackground(new java.awt.Color(255, 252, 252));
+        prisioneiroNome_TextField.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+
+        prisioneiroDataNasci_FormattedTextField.setBackground(new java.awt.Color(255, 252, 252));
+        prisioneiroDataNasci_FormattedTextField.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         try {
             prisioneiroDataNasci_FormattedTextField.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
 
+        prisioneiroCPF_FormattedTextField.setBackground(new java.awt.Color(255, 252, 252));
+        prisioneiroCPF_FormattedTextField.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         try {
             prisioneiroCPF_FormattedTextField.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("###.###.###-##")));
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
 
+        jLabel5.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
         jLabel5.setText("Número de Registro:");
 
+        prisioneiroSalvar_Button.setBackground(new java.awt.Color(255, 252, 252));
+        prisioneiroSalvar_Button.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
         prisioneiroSalvar_Button.setText("Salvar");
         prisioneiroSalvar_Button.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -208,23 +239,33 @@ public class PrisioneiroView extends javax.swing.JInternalFrame implements Atual
             }
         });
 
+        prisioneiroLimpar_Button.setBackground(new java.awt.Color(255, 252, 252));
+        prisioneiroLimpar_Button.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
         prisioneiroLimpar_Button.setText("Limpar");
 
-        jLabel7.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel7.setFont(new java.awt.Font("Yu Gothic UI", 1, 14)); // NOI18N
         jLabel7.setText("Informações");
 
+        jLabel8.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
         jLabel8.setText("Pena:");
 
+        jLabel6.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
         jLabel6.setText("Data da Prisão:");
 
+        prisioneiroDataPrisao_FormattedTextField.setBackground(new java.awt.Color(255, 252, 252));
+        prisioneiroDataPrisao_FormattedTextField.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         try {
             prisioneiroDataPrisao_FormattedTextField.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
 
+        jLabel9.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
         jLabel9.setText("Selecione a Cela:");
 
+        prisioneiroCela_Table.setBackground(new java.awt.Color(255, 252, 252));
+        prisioneiroCela_Table.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        prisioneiroCela_Table.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
         prisioneiroCela_Table.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -241,8 +282,16 @@ public class PrisioneiroView extends javax.swing.JInternalFrame implements Atual
                 return canEdit [columnIndex];
             }
         });
+        prisioneiroCela_Table.setGridColor(new java.awt.Color(255, 252, 252));
+        prisioneiroCela_Table.setSelectionBackground(new java.awt.Color(0, 153, 153));
+        prisioneiroCela_Table.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jScrollPane1.setViewportView(prisioneiroCela_Table);
 
+        prisioneiroNumRegistro_TextField.setBackground(new java.awt.Color(255, 252, 252));
+        prisioneiroNumRegistro_TextField.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+
+        prisioneiroVoltar_Button.setBackground(new java.awt.Color(255, 252, 252));
+        prisioneiroVoltar_Button.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
         prisioneiroVoltar_Button.setText("Voltar");
         prisioneiroVoltar_Button.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -250,12 +299,17 @@ public class PrisioneiroView extends javax.swing.JInternalFrame implements Atual
             }
         });
 
+        prisioneiroEditarSalvar_Btn.setBackground(new java.awt.Color(255, 252, 252));
+        prisioneiroEditarSalvar_Btn.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
         prisioneiroEditarSalvar_Btn.setText("Salvar");
         prisioneiroEditarSalvar_Btn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 prisioneiroEditarSalvar_BtnActionPerformed(evt);
             }
         });
+
+        prisioneiroPena_TextField.setBackground(new java.awt.Color(255, 252, 252));
+        prisioneiroPena_TextField.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
         javax.swing.GroupLayout cadastrarPrisioneiroPanelLayout = new javax.swing.GroupLayout(cadastrarPrisioneiroPanel);
         cadastrarPrisioneiroPanel.setLayout(cadastrarPrisioneiroPanelLayout);
@@ -373,7 +427,7 @@ public class PrisioneiroView extends javax.swing.JInternalFrame implements Atual
                 .addComponent(listaPrisioneiroPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(cadastrarPrisioneiroPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(67, Short.MAX_VALUE))
+                .addContainerGap(68, Short.MAX_VALUE))
         );
 
         pack();

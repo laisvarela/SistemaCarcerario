@@ -78,34 +78,49 @@ public class CelaView extends javax.swing.JInternalFrame implements AtualizavelL
         celaBuscar_TextField = new javax.swing.JTextField();
         celaBuscar_Btn = new javax.swing.JButton();
 
+        setBackground(new java.awt.Color(255, 255, 255));
         setClosable(true);
         setIconifiable(true);
         setMaximizable(true);
         setResizable(true);
         setTitle("Cadastro de Cela");
 
+        celaCadastroPanel.setBackground(new java.awt.Color(255, 255, 255));
         celaCadastroPanel.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
+        jLabel1.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
         jLabel1.setText("Número:");
 
+        jLabel2.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
         jLabel2.setText("Capacidade:");
 
+        celaNumero_FomattedField.setBackground(new java.awt.Color(255, 252, 252));
         try {
             celaNumero_FomattedField.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("######")));
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
+        celaNumero_FomattedField.setFont(new java.awt.Font("Calibri", 0, 12)); // NOI18N
 
+        celaCapaciade_ComboBox.setBackground(new java.awt.Color(255, 252, 252));
         celaCapaciade_ComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2", "3", "4", "5" }));
 
+        jLabel4.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
         jLabel4.setText("Guarda Diurno:");
 
+        celaGuardaDiurno_List.setBackground(new java.awt.Color(255, 252, 252));
+        celaGuardaDiurno_List.setSelectionBackground(new java.awt.Color(0, 153, 153));
         jScrollPane1.setViewportView(celaGuardaDiurno_List);
 
+        jLabel5.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
         jLabel5.setText("Guarda Noturno:");
 
+        celaGuardaNoturno_List.setBackground(new java.awt.Color(255, 252, 252));
+        celaGuardaNoturno_List.setSelectionBackground(new java.awt.Color(0, 153, 153));
         jScrollPane2.setViewportView(celaGuardaNoturno_List);
 
+        celaSalvar_Btn.setBackground(new java.awt.Color(255, 252, 252));
+        celaSalvar_Btn.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
         celaSalvar_Btn.setText("Salvar");
         celaSalvar_Btn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -113,6 +128,8 @@ public class CelaView extends javax.swing.JInternalFrame implements AtualizavelL
             }
         });
 
+        celaLimpar_Btn.setBackground(new java.awt.Color(255, 252, 252));
+        celaLimpar_Btn.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
         celaLimpar_Btn.setText("Limpar");
         celaLimpar_Btn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -120,6 +137,8 @@ public class CelaView extends javax.swing.JInternalFrame implements AtualizavelL
             }
         });
 
+        celaVoltar_Btn.setBackground(new java.awt.Color(255, 252, 252));
+        celaVoltar_Btn.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
         celaVoltar_Btn.setText("Voltar");
         celaVoltar_Btn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -127,6 +146,8 @@ public class CelaView extends javax.swing.JInternalFrame implements AtualizavelL
             }
         });
 
+        celaEditarSalvar_Btn.setBackground(new java.awt.Color(255, 252, 252));
+        celaEditarSalvar_Btn.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
         celaEditarSalvar_Btn.setText("Salvar");
         celaEditarSalvar_Btn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -205,9 +226,13 @@ public class CelaView extends javax.swing.JInternalFrame implements AtualizavelL
                 .addContainerGap())
         );
 
-        jLabel6.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        celaListaPanel.setBackground(new java.awt.Color(255, 255, 255));
+
+        jLabel6.setFont(new java.awt.Font("Yu Gothic UI", 1, 14)); // NOI18N
         jLabel6.setText("Lista de Celas");
 
+        celaTabela_Table.setBackground(new java.awt.Color(255, 252, 252));
+        celaTabela_Table.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
         celaTabela_Table.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -216,8 +241,12 @@ public class CelaView extends javax.swing.JInternalFrame implements AtualizavelL
                 "Número", "Capacidade", "Guarda Diurno", "Guarda Noturno"
             }
         ));
+        celaTabela_Table.setSelectionBackground(new java.awt.Color(0, 153, 153));
+        celaTabela_Table.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jScrollPane4.setViewportView(celaTabela_Table);
 
+        celaAdicionar_Btn.setBackground(new java.awt.Color(255, 252, 252));
+        celaAdicionar_Btn.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
         celaAdicionar_Btn.setText("Adicionar");
         celaAdicionar_Btn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -225,6 +254,8 @@ public class CelaView extends javax.swing.JInternalFrame implements AtualizavelL
             }
         });
 
+        celaEditar_Btn.setBackground(new java.awt.Color(255, 252, 252));
+        celaEditar_Btn.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
         celaEditar_Btn.setText("Editar");
         celaEditar_Btn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -232,6 +263,8 @@ public class CelaView extends javax.swing.JInternalFrame implements AtualizavelL
             }
         });
 
+        celaRemover_Btn.setBackground(new java.awt.Color(255, 252, 252));
+        celaRemover_Btn.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
         celaRemover_Btn.setText("Remover");
         celaRemover_Btn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -239,6 +272,10 @@ public class CelaView extends javax.swing.JInternalFrame implements AtualizavelL
             }
         });
 
+        celaBuscar_TextField.setFont(new java.awt.Font("Calibri", 0, 12)); // NOI18N
+
+        celaBuscar_Btn.setBackground(new java.awt.Color(255, 252, 252));
+        celaBuscar_Btn.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
         celaBuscar_Btn.setText("Buscar");
         celaBuscar_Btn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -256,6 +293,7 @@ public class CelaView extends javax.swing.JInternalFrame implements AtualizavelL
                     .addComponent(jLabel6)
                     .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 804, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, celaListaPanelLayout.createSequentialGroup()
+                        .addGap(6, 6, 6)
                         .addComponent(celaBuscar_TextField, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(celaBuscar_Btn)
@@ -279,8 +317,8 @@ public class CelaView extends javax.swing.JInternalFrame implements AtualizavelL
                     .addComponent(celaAdicionar_Btn)
                     .addComponent(celaEditar_Btn)
                     .addComponent(celaRemover_Btn)
-                    .addComponent(celaBuscar_TextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(celaBuscar_Btn))
+                    .addComponent(celaBuscar_Btn)
+                    .addComponent(celaBuscar_TextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
