@@ -4,7 +4,7 @@ import dao.GuardaDAO;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
-public class Guarda extends Pessoa implements Registro, Entidade {
+public class Guarda extends Pessoa implements Registro {
 
     private String matricula;
     private String turno;
@@ -54,12 +54,7 @@ public class Guarda extends Pessoa implements Registro, Entidade {
                 + "Turno: " + turno + "\n"
                 + "Atribuido: " + atribuido;
     }
-
-    @Override
-    public String getId() {
-        return this.getMatricula();
-    }
-
+    
     public void cadastrarGuarda(Guarda guarda) {
         GuardaDAO g = new GuardaDAO();
         g.inserirGuarda(guarda);

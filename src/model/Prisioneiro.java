@@ -4,7 +4,7 @@ import dao.PrisioneiroDAO;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
-public class Prisioneiro extends Pessoa implements Registro, Entidade {
+public class Prisioneiro extends Pessoa implements Registro {
 
     private int numRegistro;
     private LocalDate dataPrisao;
@@ -71,11 +71,6 @@ public class Prisioneiro extends Pessoa implements Registro, Entidade {
         LocalDate dataAtual = LocalDate.now();
         int anosRestantes = pena - (int) (dataAtual.getYear() - dataPrisao.getYear());
         return anosRestantes > 0 ? anosRestantes : 0;
-    }
-
-    @Override
-    public String getId() {
-        return String.valueOf(this.getNumRegistro());
     }
 
     public void cadastrarPrisioneiro(Prisioneiro prisioneiro) {

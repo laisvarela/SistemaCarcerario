@@ -4,7 +4,7 @@ import dao.CelaDAO;
 import java.util.ArrayList;
 import java.util.Set;
 
-public class Cela implements Registro, Entidade {
+public class Cela implements Registro {
 
     private int numero, capacidade;
     private Guarda guardaDiurno, guardaNoturno;
@@ -94,11 +94,6 @@ public class Cela implements Registro, Entidade {
             relatorio += prisioneiro.gerarRelatorio() + "Tempo Restante: " + prisioneiro.getTempoRestante() + "\n";
         }
         return relatorio;
-    }
-
-    @Override
-    public String getId() {
-        return String.valueOf(this.getNumero());
     }
 
     public void cadastrarCela(Cela cela) {
